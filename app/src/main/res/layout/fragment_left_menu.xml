@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-atuo"
+    android:orientation="vertical"
+    android:paddingLeft="14dp"
+    android:paddingRight="14dp"
+    android:background="#7f000000"
+    android:paddingTop="24dp"
+    android:paddingBottom="60dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:clickable="true"
+        android:id="@+id/head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.ttxr.weight.CircleImageView
+            android:layout_width="wrap_content"
+            android:id="@+id/logo"
+            android:src="@drawable/default_logo"
+            app:border_color="@color/transparent"
+            app:border_width="0dp"
+            android:scaleType="centerCrop"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_toRightOf="@id/logo"
+            android:layout_marginLeft="15dp"
+            android:layout_alignTop="@id/logo"
+            android:layout_alignBottom="@id/logo"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textColor="@color/abc_primary_text_material_dark"
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:textSize="18sp"
+                android:text="淘淘小二"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="wrap_content"
+                android:textSize="15sp"
+                android:layout_marginTop="12dp"
+                android:text="13488611333"
+                android:textColor="@color/abc_primary_text_material_dark"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:layout_height="1px" />
+
+    <ListView
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:cacheColorHint="@color/transparent"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:clipToPadding="false"
+        android:paddingTop="12dp"
+        android:fadingEdge="none"
+        android:layout_weight="1"
+        android:focusable="false"
+        android:id="@+id/listview"
+        android:listSelector="@color/transparent"
+        android:layout_height="match_parent">
+
+    </ListView>
+
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:layout_height="1px" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/menu_icon6"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="客服 400-666-6666"
+            android:textSize="15sp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/abc_primary_text_material_dark"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

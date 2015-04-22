@@ -1,0 +1,30 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.1.0'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:+'
+    }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+        flatDir {
+            dirs 'libs'
+        }
+    }
+}
+
+ext {
+    applicationId = "com.ttxr.activity"
+    compileSdkVersion = 22
+    buildToolsVersion = "22.0.1"
+    checkReleaseBuilds = false
+    abortOnError = false
+    targetSdkVersion = 22
+    minSdkVersion = 14
+    versionCode = 1
+    versionName = "1.0"
+}

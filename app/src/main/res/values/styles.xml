@@ -1,0 +1,17 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="actionBarStyle">@style/MyActionBarStyle</item>
+        <item name="colorPrimaryDark">@color/actionbar_dark</item>
+        <item name="colorPrimary">@color/actionbar</item>
+        <item name="colorAccent">@color/actionbar</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="MyActionBarStyle" parent="@style/Widget.AppCompat.ActionBar.Solid">
+        <item name="displayOptions">homeAsUp|showTitle</item>
+    </style>
+
+</resources>

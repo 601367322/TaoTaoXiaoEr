@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">淘淘小二</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="exit">退出登录</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="my_order">我的订单</string>
+    <string name="order_history">接单记录</string>
+    <string name="message_center">消息中心</string>
+    <string name="my_account">我的账户</string>
+    <string name="setting">设置</string>
+</resources>
