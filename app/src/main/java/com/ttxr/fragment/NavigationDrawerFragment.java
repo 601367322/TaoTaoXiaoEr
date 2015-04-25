@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -14,7 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
-import com.ttxr.Model.MenuBean;
+import com.ttxr.bean.MenuBean;
 import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseFragment;
 import com.ttxr.adapter.MenuAdapter;
@@ -49,24 +50,29 @@ public class NavigationDrawerFragment extends BaseFragment {
     }
 
     @Click(R.id.head)
-    public void headClick(View view) {
-//        if (activity != null) {
-//            activity.replaceFragment(R.id.content, new UserInfoFragment_());
-//            activity.main.close();
-//        }
+    public void headClick() {
+        mCallbacks.onNavigationDrawerItemSelected(new UserInfoFragment_());
     }
 
     @ItemClick(R.id.listview)
     public void onListItemClick(int position) {
-//        if(activity!=null) {
-//            MenuBean bean = adapter.getItem(position);
-//            switch (position) {
-//                case 0:
-//                    activity.replaceFragment(R.id.content,new MainFragment_());
-//                    break;
-//            }
-//            activity.main.close();
-//        }
+        switch (position) {
+            case 0:
+                mCallbacks.onNavigationDrawerItemSelected(new MapFragment_());
+                break;
+            case 1:
+                mCallbacks.onNavigationDrawerItemSelected(new OrderHistoryFragment_());
+                break;
+            case 2:
+                mCallbacks.onNavigationDrawerItemSelected(new MessageFragment_());
+                break;
+            case 3:
+                mCallbacks.onNavigationDrawerItemSelected(new AccountFragment_());
+                break;
+            case 4:
+                mCallbacks.onNavigationDrawerItemSelected(new SettingFragment_());
+                break;
+        }
     }
 
     /**
@@ -272,6 +278,6 @@ public class NavigationDrawerFragment extends BaseFragment {
         /**
          * Called when an item in the navigation drawer is selected.
          */
-        void onNavigationDrawerItemSelected(int position);
+        void onNavigationDrawerItemSelected(Fragment fragment);
     }
 }

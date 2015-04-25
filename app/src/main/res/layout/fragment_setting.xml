@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:fillViewport="true"
+    android:background="@color/activity_bg"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:background="@drawable/item_have_btm_line_bg"
+            android:gravity="center_vertical"
+            android:layout_height="@dimen/setting_item_height">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="@string/message_remind"
+                android:textColor="@color/setting_title"
+                android:textSize="@dimen/setting_title_size"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_hardware_keyboard_arrow_right"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:background="@drawable/item_have_btm_line_bg"
+            android:gravity="center_vertical"
+            android:layout_height="@dimen/setting_item_height">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="@string/clear_cache"
+                android:textColor="@color/setting_title"
+                android:textSize="@dimen/setting_title_size"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_hardware_keyboard_arrow_right"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:clickable="true"
+            android:background="@drawable/item_no_btm_line_bg"
+            android:gravity="center_vertical"
+            android:layout_height="@dimen/setting_item_height">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="@string/phone_safe"
+                android:textColor="@color/setting_title"
+                android:textSize="@dimen/setting_title_size"
+                android:layout_height="wrap_content" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_hardware_keyboard_arrow_right"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:clickable="true"
+            android:layout_marginTop="14dp"
+            android:layout_width="match_parent"
+            android:background="@drawable/item_have_btm_line_bg"
+            android:gravity="center_vertical"
+            android:layout_height="@dimen/setting_item_height">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="@string/suggestion"
+                android:textColor="@color/setting_title"
+                android:textSize="@dimen/setting_title_size"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_hardware_keyboard_arrow_right"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:background="@drawable/item_have_btm_line_bg"
+            android:gravity="center_vertical"
+            android:layout_height="@dimen/setting_item_height">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="@string/update_version"
+                android:textColor="@color/setting_title"
+                android:textSize="@dimen/setting_title_size"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_hardware_keyboard_arrow_right"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:clickable="true"
+            android:background="@drawable/item_no_btm_line_bg"
+            android:gravity="center_vertical"
+            android:layout_height="@dimen/setting_item_height">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="@string/about_us"
+                android:textColor="@color/setting_title"
+                android:textSize="@dimen/setting_title_size"
+                android:layout_height="wrap_content" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_hardware_keyboard_arrow_right"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

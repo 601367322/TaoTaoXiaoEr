@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/activity_bg"
+    android:fillViewport="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:background="@color/setting_title"
+            android:layout_height="95dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/account_zhuanzhang"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:textSize="@dimen/setting_title_size"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/zhuanzhang"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:background="@color/account_line"
+                android:layout_height="60dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/account_shoukuan"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:textSize="@dimen/setting_title_size"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/shoukuan"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:background="@color/account_line"
+                android:layout_height="60dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/account_chongzhi"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:textSize="@dimen/setting_title_size"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/chongzhi"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:background="@drawable/item_have_btm_line_bg"
+            android:gravity="center_vertical"
+            android:layout_height="@dimen/setting_item_height">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="余额 ￥350"
+                android:textColor="@color/setting_title"
+                android:textSize="@dimen/setting_title_size"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:background="@drawable/item_have_btm_line_bg"
+            android:gravity="center_vertical"
+            android:layout_height="@dimen/setting_item_height">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="银行卡 2张"
+                android:textColor="@color/setting_title"
+                android:textSize="@dimen/setting_title_size"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

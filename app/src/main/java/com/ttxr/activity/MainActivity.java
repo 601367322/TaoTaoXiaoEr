@@ -1,11 +1,13 @@
 package com.ttxr.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 
 import com.ttxr.activity.base.BaseActivity;
-import com.ttxr.fragment.MainFragment_;
+import com.ttxr.fragment.MapFragment_;
 import com.ttxr.fragment.NavigationDrawerFragment;
+import com.ttxr.interfaces.IFragmentTitle;
 
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.FragmentById;
@@ -34,12 +36,16 @@ public class MainActivity extends BaseActivity implements NavigationDrawerFragme
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content, new MainFragment_())
+                .replace(R.id.content, new MapFragment_())
                 .commit();
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(int position) {
-
+    public void onNavigationDrawerItemSelected(Fragment fragment) {
+        replaceFragment(R.id.content, fragment);
+        if(fragment instanceof IFragmentTitle) {
+            getSupportActionBar().setTitle(((IFragmentTitle) fragment).getFragmentTitle());
+        }
+        mNavigationDrawerFragment.closeDrawer();
     }
 }

@@ -1,3 +1,4 @@
+/*
 package com.ttxr.fragment;
 
 import android.app.Activity;
@@ -12,9 +13,11 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+*/
 /**
  * Created by mr.shen on 2015/4/19.
- */
+ *//*
+
 @EFragment(R.layout.fragment_actionbar)
 public class ActionBarFragment extends BaseFragment {
 
@@ -39,3 +42,4 @@ public class ActionBarFragment extends BaseFragment {
     public void leftBtnClick(){
     }
 }
+*/

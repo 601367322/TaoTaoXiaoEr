@@ -9,11 +9,8 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.Display;
-import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.view.WindowManager;
 
 import com.amap.api.location.AMapLocation;
@@ -32,12 +29,17 @@ import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseFragment;
+import com.ttxr.interfaces.IFragmentTitle;
 
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.ViewById;
 
-@EFragment
-public class MainFragment extends BaseFragment implements LocationSource, AMapLocationListener, SensorEventListener, AMap.InfoWindowAdapter {
+@EFragment(R.layout.activity_fragment)
+@OptionsMenu(R.menu.emoticon_menu)
+public class MapFragment extends BaseFragment implements IFragmentTitle, LocationSource, AMapLocationListener, SensorEventListener, AMap.InfoWindowAdapter {
 
+    @ViewById(R.id.map)
     public MapView mapView;//地图
     private AMap aMap;
     private OnLocationChangedListener mListener;
@@ -61,18 +63,8 @@ public class MainFragment extends BaseFragment implements LocationSource, AMapLo
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (view == null) {
-            view = inflater.inflate(R.layout.activity_fragment, null);
-        } else {
-            ViewParent parent = view.getParent();
-            if (parent != null && parent instanceof ViewGroup) {
-                ((ViewGroup) parent).removeView(view);
-            }
-        }
-        mapView = (MapView) view.findViewById(R.id.map);
-        mapView.onCreate(savedInstanceState);
-        return view;
+    public void afterViews() {
+        mapView.onCreate(null);
     }
 
     @Override
@@ -306,5 +298,10 @@ public class MainFragment extends BaseFragment implements LocationSource, AMapLo
     @Override
     public View getInfoContents(Marker marker) {
         return null;
+    }
+
+    @Override
+    public int getFragmentTitle() {
+        return R.string.app_name;
     }
 }

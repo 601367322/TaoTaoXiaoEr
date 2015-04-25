@@ -1,6 +1,7 @@
 package com.ttxr.activity.base;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 
 import org.androidannotations.annotations.AfterViews;
@@ -17,6 +18,6 @@ public abstract class BaseActivity extends ActionBarActivity {
     }
 
     public void replaceFragment(int id, Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().replace(id, fragment).commitAllowingStateLoss();
+        getSupportFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(id, fragment).commitAllowingStateLoss();
     }
 }

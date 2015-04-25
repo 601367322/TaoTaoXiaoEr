@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ttxr.Model.MenuBean;
+import com.ttxr.bean.MenuBean;
 import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseAdapter;
 

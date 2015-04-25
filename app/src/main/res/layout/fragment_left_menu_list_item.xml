@@ -29,10 +29,9 @@
 
     <TextView
         android:id="@+id/title"
-        android:textSize="15sp"
+        android:textSize="@dimen/setting_title_size"
         android:layout_marginLeft="10dp"
         android:textColor="@color/abc_primary_text_material_dark"
         android:layout_width="wrap_content"
-        android:text="菜单栏"
         android:layout_height="wrap_content" />
 </LinearLayout>

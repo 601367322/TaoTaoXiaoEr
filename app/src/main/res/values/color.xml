@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="actionbar">#fb705d</color>
-    <color name="actionbar_dark">#e76756</color>
+    <color name="actionbar_dark">#d96050</color>
     <color name="white">#fff</color>
     <color name="black">#000</color>
     <color name="transparent">#00000000</color>
@@ -9,4 +9,9 @@
 
     <color name="menu_background">#7f000000</color>
     <color name="menu_background_selected">#7f595959</color>
+    <color name="setting_title">#777777</color>
+    <color name="setting_content">#494949</color>
+    <color name="account_line">#9b9b9b</color>
+    <color name="dfdfdf">#dfdfdf</color>
+    <color name="f4f4f4">#f4f4f4</color>
 </resources>

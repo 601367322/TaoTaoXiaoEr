@@ -10,7 +10,7 @@
             <item android:bottom="1dp">
                 <shape>
                     <solid android:color="#dfdfdf" />
-                    <padding android:left="16dp"/>
+                    <padding android:left="14dp"/>
                 </shape>
             </item>
         </layer-list>
@@ -25,7 +25,7 @@
             <item android:bottom="1dp">
                 <shape>
                     <solid android:color="#ffffff" />
-                    <padding android:left="16dp"/>
+                    <padding android:left="14dp"/>
                 </shape>
             </item>
         </layer-list>

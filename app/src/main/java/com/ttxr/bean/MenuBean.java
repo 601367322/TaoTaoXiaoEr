@@ -1,4 +1,4 @@
-package com.ttxr.Model;
+package com.ttxr.bean;
 
 import java.io.Serializable;
 
