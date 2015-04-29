@@ -22,13 +22,13 @@ public class WelcomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        if (ac.cs.getHaveWelcome() == CommonShared.OFF) {
-//            MainActivity_.intent(this).start();
-//            finish();
-//        } else if (ac.cs.getHaveWelcome() == CommonShared.ON) {
+        if (ac.cs.getHaveWelcome() == CommonShared.OFF) {
+            MainActivity_.intent(this).start();
+            finish();
+        } else if (ac.cs.getHaveWelcome() == CommonShared.ON) {
             ac.cs.setHaveWelcome(CommonShared.OFF);
             ViewPagerActivity_.intent(this).start();
             finish();
-//        }
+        }
     }
 }

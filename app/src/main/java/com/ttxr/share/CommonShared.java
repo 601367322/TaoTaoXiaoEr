@@ -21,7 +21,7 @@ public class CommonShared {
     }
 
     public int getHaveWelcome() {
-        return sp.getInt(HAVE_WELCOME, OFF);
+        return sp.getInt(HAVE_WELCOME, ON);
     }
 
 }

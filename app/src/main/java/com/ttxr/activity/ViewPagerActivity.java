@@ -30,6 +30,7 @@ public class ViewPagerActivity extends Activity {
         imgs.add(R.drawable.launcher_1);
         imgs.add(R.drawable.launcher_2);
         viewpager.setAdapter(pagerAdapter);
+
     }
 
     PagerAdapter pagerAdapter = new PagerAdapter() {
@@ -56,6 +57,15 @@ public class ViewPagerActivity extends Activity {
             imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             imageView.setImageResource(imgs.get(position));
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            if (position == getCount() - 1) {
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MainActivity_.intent(ViewPagerActivity.this).start();
+                        finish();
+                    }
+                });
+            }
             container.addView(imageView, ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT);
             return imageView;

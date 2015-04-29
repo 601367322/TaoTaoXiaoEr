@@ -9,9 +9,11 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
@@ -35,6 +37,8 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 @EFragment(R.layout.activity_fragment)
 @OptionsMenu(R.menu.emoticon_menu)
 public class MapFragment extends BaseFragment implements IFragmentTitle, LocationSource, AMapLocationListener, SensorEventListener, AMap.InfoWindowAdapter {
@@ -52,6 +56,7 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
     private float mAngle;
     private static final float zoom = 16;//缩放比例
     private View view;
+    private AtomicBoolean toMyPosition = new AtomicBoolean(false);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -95,11 +100,11 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
         myLocationStyle.strokeColor(0x3302bce4);
         myLocationStyle.strokeWidth(1);
         aMap.setMyLocationStyle(myLocationStyle);//设置我的位置样式
-
+        aMap.setInfoWindowAdapter(this);
         aMap.setLocationSource(this);//设置监听
         aMap.getUiSettings().setMyLocationButtonEnabled(true);//显示我的位置按钮
         aMap.setMyLocationEnabled(true);
-        changeCamera(CameraUpdateFactory.zoomTo(zoom), null);//缩放
+        changeCamera(CameraUpdateFactory.zoomTo(zoom), null, false);//缩放
     }
 
     @Override
@@ -132,7 +137,7 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
         if (mAMapLocationManager == null) {
             mAMapLocationManager = LocationManagerProxy.getInstance(getActivity());
             mAMapLocationManager.requestLocationUpdates(
-                    LocationProviderProxy.AMapNetwork, 2000, 10, this);
+                    LocationProviderProxy.AMapNetwork, 5000, 10, this);
         }
     }
 
@@ -175,9 +180,17 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
     public void onLocationChanged(AMapLocation aLocation) {
         if (mListener != null && aLocation != null) {
             mListener.onLocationChanged(aLocation);// 显示系统小蓝点
-            addMarker(new LatLng(aLocation.getLatitude(), aLocation.getLongitude()));
+            addMarker(aLocation);
             mGPSMarker.setPosition(new LatLng(aLocation.getLatitude(), aLocation.getLongitude()));
+
+            if (toMyPosition.compareAndSet(false, true)) {
+                toMyPosition(aLocation);
+            }
         }
+    }
+
+    public void toMyPosition(final AMapLocation aLocation) {
+        changeCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(aLocation.getLatitude(), aLocation.getLongitude()), zoom), null, false);
     }
 
     @Override
@@ -266,8 +279,11 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
     /**
      * 调用函数animateCamera来改变可视区域
      */
-    private void changeCamera(CameraUpdate update, AMap.CancelableCallback callback) {
-        aMap.animateCamera(update, 1000, callback);
+    private void changeCamera(CameraUpdate update, AMap.CancelableCallback callback, boolean animate) {
+        if (animate)
+            aMap.animateCamera(update, 1000, callback);
+        else
+            aMap.moveCamera(update);
     }
 
     Marker locationMarker;
@@ -275,24 +291,24 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
     /**
      * 往地图上添加一个groundoverlay覆盖物
      */
-    private void addMarker(LatLng latLng) {
-        if (locationMarker != null) {
-            locationMarker.remove();
-        }
+    private void addMarker(AMapLocation location) {
         locationMarker = aMap.addMarker(new MarkerOptions()
                 .anchor(0.5f, 20)
                 .icon(BitmapDescriptorFactory
                         .fromResource(R.drawable.trans))
-                .position(latLng)
-                .snippet("哈哈哈")
-                .title("我的位置"));
+                .position(new LatLng(location.getLatitude(), location.getLongitude()))
+                .snippet(location.getAddress())
+                .title(getString(R.string.im_here)));
 
         locationMarker.showInfoWindow();
     }
 
     @Override
     public View getInfoWindow(Marker marker) {
-        return null;
+        View infoWindow = LayoutInflater.from(getActivity()).inflate(
+                R.layout.custom_info_window_my_location, mapView, false);
+        ((TextView)infoWindow.findViewById(R.id.address)).setText(marker.getSnippet());
+        return infoWindow;
     }
 
     @Override
