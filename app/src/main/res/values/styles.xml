@@ -14,4 +14,19 @@
         <item name="displayOptions">homeAsUp|showTitle</item>
     </style>
 
+    <style name="welcome" parent="@android:style/Theme.NoTitleBar">
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="colorPrimaryDark">@color/actionbar_dark</item>
+        <item name="colorPrimary">@color/actionbar</item>
+        <item name="colorAccent">@color/actionbar</item>
+    </style>
+
+    <style name="viewpager" parent="@android:style/Theme.NoTitleBar.Fullscreen">
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="colorPrimaryDark">@color/actionbar_dark</item>
+        <item name="colorPrimary">@color/actionbar</item>
+        <item name="colorAccent">@color/actionbar</item>
+    </style>
 </resources>
