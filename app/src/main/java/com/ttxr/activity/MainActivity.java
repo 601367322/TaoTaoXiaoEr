@@ -33,13 +33,15 @@ public class MainActivity extends BaseActivity implements NavigationDrawerFragme
     public void afterViews() {
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+                (DrawerLayout) findViewById(R.id.drawer_layout));//初始化侧滑菜单
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content, new MapFragment_())
-                .commit();
+        onNavigationDrawerItemSelected(new MapFragment_());//加载地图界面
     }
 
+    /**
+     * 侧滑菜单点击事件，切换界面
+     * @param fragment
+     */
     @Override
     public void onNavigationDrawerItemSelected(Fragment fragment) {
         replaceFragment(R.id.content, fragment);

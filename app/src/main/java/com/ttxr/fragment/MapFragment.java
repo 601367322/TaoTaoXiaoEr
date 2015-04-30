@@ -90,7 +90,7 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
         mGPSMarker = aMap.addMarker(
                 new MarkerOptions().icon(
                         BitmapDescriptorFactory
-                                .fromBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.location_marker))
+                                .fromBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.navi_map_gps_locked))
                 ).anchor((float) 0.5, (float) 0.5));//设置可以转向的箭头
 
         MyLocationStyle myLocationStyle = new MyLocationStyle();
@@ -289,11 +289,11 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
     Marker locationMarker;
 
     /**
-     * 往地图上添加一个groundoverlay覆盖物
+     * 往地图上添加一个Marker覆盖物
      */
     private void addMarker(AMapLocation location) {
         locationMarker = aMap.addMarker(new MarkerOptions()
-                .anchor(0.5f, 20)
+                .anchor(0.5f, 40)
                 .icon(BitmapDescriptorFactory
                         .fromResource(R.drawable.trans))
                 .position(new LatLng(location.getLatitude(), location.getLongitude()))
