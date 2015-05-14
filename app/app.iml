@@ -100,7 +100,6 @@
     <orderEntry type="library" exported="" name="appcompat-v7-22.1.1" level="project" />
     <orderEntry type="library" exported="" name="ormlite-android-4.48" level="project" />
     <orderEntry type="library" exported="" name="AMap_Services_V2.4.0" level="project" />
-    <orderEntry type="library" exported="" name="umeng-update-v2.6.0.1" level="project" />
     <orderEntry type="library" exported="" name="ormlite-core-4.48" level="project" />
     <orderEntry type="library" exported="" name="androidannotations-api-4.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="fresco-0.3.0" level="project" />

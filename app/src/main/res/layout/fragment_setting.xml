@@ -1,78 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:fillViewport="true"
+    android:layout_height="match_parent"
     android:background="@color/activity_bg"
-    android:layout_height="match_parent">
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:clickable="true"
             android:layout_width="match_parent"
+            android:layout_height="@dimen/setting_item_height"
             android:background="@drawable/item_have_btm_line_bg"
-            android:gravity="center_vertical"
-            android:layout_height="@dimen/setting_item_height">
+            android:clickable="true"
+            android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/message_remind"
                 android:textColor="@color/setting_title"
-                android:textSize="@dimen/setting_title_size"
-                android:layout_height="wrap_content" />
+                android:textSize="@dimen/setting_title_size" />
+
+            <Switch
+                android:id="@+id/push_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="14dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/check_version"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/setting_item_height"
+            android:background="@drawable/item_have_btm_line_bg"
+            android:clickable="true"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/update_version"
+                android:textColor="@color/setting_title"
+                android:textSize="@dimen/setting_title_size" />
+
+            <TextView
+                android:id="@+id/version_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/setting_title"
+                android:textSize="12sp" />
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:src="@drawable/ic_hardware_keyboard_arrow_right"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_hardware_keyboard_arrow_right" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/umeng_fb"
-            android:clickable="true"
             android:layout_width="match_parent"
+            android:layout_height="@dimen/setting_item_height"
             android:background="@drawable/item_have_btm_line_bg"
-            android:gravity="center_vertical"
-            android:layout_height="@dimen/setting_item_height">
+            android:clickable="true"
+            android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/suggestion"
                 android:textColor="@color/setting_title"
-                android:textSize="@dimen/setting_title_size"
-                android:layout_height="wrap_content" />
+                android:textSize="@dimen/setting_title_size" />
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:src="@drawable/ic_hardware_keyboard_arrow_right"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_hardware_keyboard_arrow_right" />
         </LinearLayout>
 
-        <LinearLayout
-            android:clickable="true"
+        <View
             android:layout_width="match_parent"
-            android:background="@drawable/item_have_btm_line_bg"
-            android:gravity="center_vertical"
-            android:layout_height="@dimen/setting_item_height">
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:text="@string/update_version"
-                android:textColor="@color/setting_title"
-                android:textSize="@dimen/setting_title_size"
-                android:layout_height="wrap_content" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:src="@drawable/ic_hardware_keyboard_arrow_right"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_marginBottom="28dp"
+            android:background="@drawable/exit_btn_bg"
+            android:text="@string/exit"
+            android:textColor="@color/abc_primary_text_material_dark"
+            android:textSize="18sp" />
     </LinearLayout>
 </ScrollView>
