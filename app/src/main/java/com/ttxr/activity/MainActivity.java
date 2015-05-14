@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.ttxr.activity.base.BaseActivity;
 import com.ttxr.fragment.MapFragment_;
 import com.ttxr.fragment.NavigationDrawerFragment;
@@ -36,6 +37,9 @@ public class MainActivity extends BaseActivity implements NavigationDrawerFragme
                 (DrawerLayout) findViewById(R.id.drawer_layout));//初始化侧滑菜单
 
         onNavigationDrawerItemSelected(new MapFragment_());//加载地图界面
+
+        SimpleDraweeView imageview= new SimpleDraweeView(this);
+        imageview.setImageURI();
     }
 
     /**
