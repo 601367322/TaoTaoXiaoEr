@@ -46,7 +46,7 @@ public class LogUtil {
                 .append(traceElement.getFileName()).append(" | ")
                 .append(traceElement.getLineNumber()).append(" | ")
                 .append(traceElement.getMethodName()).append("]");
-        return toStringBuffer.toString();
+        return "LogUtil:\t" + toStringBuffer.toString();
     }
 
     public static String getLineMethod() {
@@ -54,12 +54,12 @@ public class LogUtil {
         StringBuffer toStringBuffer = new StringBuffer("[")
                 .append(traceElement.getLineNumber()).append(" | ")
                 .append(traceElement.getMethodName()).append("]");
-        return toStringBuffer.toString();
+        return "LogUtil:\t" + toStringBuffer.toString();
     }
 
     public static String _FILE_() {
         StackTraceElement traceElement = ((new Exception()).getStackTrace())[2];
-        return traceElement.getFileName();
+        return "LogUtil:\t" + traceElement.getFileName();
     }
 
     public static String _FUNC_() {

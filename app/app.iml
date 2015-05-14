@@ -97,16 +97,18 @@
     <orderEntry type="library" exported="" name="support-annotations-22.1.1" level="project" />
     <orderEntry type="library" exported="" name="support-v4-22.1.1" level="project" />
     <orderEntry type="library" exported="" name="universal-image-loader-1.9.4-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="androidannotations-api-3.4-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.1.1" level="project" />
     <orderEntry type="library" exported="" name="ormlite-android-4.48" level="project" />
     <orderEntry type="library" exported="" name="AMap_Services_V2.4.0" level="project" />
-    <orderEntry type="library" exported="" name="android-async-http-1.4.7-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="umeng-update-v2.6.0.1" level="project" />
     <orderEntry type="library" exported="" name="ormlite-core-4.48" level="project" />
+    <orderEntry type="library" exported="" name="androidannotations-api-4.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="fresco-0.3.0" level="project" />
     <orderEntry type="library" exported="" name="imagepipeline-0.3.0" level="project" />
     <orderEntry type="library" exported="" name="bolts-android-1.1.4" level="project" />
+    <orderEntry type="library" exported="" name="android-async-http-1.4.7" level="project" />
     <orderEntry type="library" exported="" name="Android_Location_V1.3.2" level="project" />
     <orderEntry type="library" exported="" name="cardview-v7-22.1.1" level="project" />
+    <orderEntry type="module" module-name="lib_umeng" exported="" />
   </component>
 </module>

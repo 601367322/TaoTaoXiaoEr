@@ -16,7 +16,7 @@
     <string name="zhuanzhang">转账</string>
     <string name="shoukuan">收款</string>
     <string name="chongzhi">充值</string>
-    <string name="message_remind">消息提醒设置</string>
+    <string name="message_remind">消息提醒</string>
     <string name="third_bind">第三方绑定</string>
     <string name="modify_password">修改密码</string>
     <string name="clear_cache">清除缓存</string>

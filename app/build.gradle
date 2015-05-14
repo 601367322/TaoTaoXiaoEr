@@ -54,6 +54,8 @@ dependencies {
     compile 'com.loopj.android:android-async-http:+'//网络加载
     compile 'de.greenrobot:eventbus:+'//eventbus
     compile 'com.facebook.fresco:fresco:0.3.0+'
+
+    compile project(':lib_umeng')
 }
 
 apt {

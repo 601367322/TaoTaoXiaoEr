@@ -132,7 +132,7 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <LinearLayout
+       <!-- <LinearLayout
             android:layout_width="match_parent"
             android:background="@drawable/item_no_btm_line_bg"
             android:gravity="center_vertical"
@@ -235,7 +235,7 @@
                 android:src="@drawable/ic_hardware_keyboard_arrow_right"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-
+-->
         <Button
             android:layout_width="match_parent"
             android:text="@string/exit"
