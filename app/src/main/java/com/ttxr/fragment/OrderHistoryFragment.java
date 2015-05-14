@@ -101,7 +101,8 @@ public class OrderHistoryFragment extends BaseFragment implements IFragmentTitle
                     list.add(new OrderHistoryBean());
                 }
                 if (adapter == null) {
-                    adapter = new OrderHistoryAdapter(list, getActivity());
+                    adapter = new OrderHistoryAdapter(getActivity());
+                    adapter.setList(list);
                     listview.setAdapter(adapter);
                 } else {
                     adapter.setList(list);
@@ -125,7 +126,8 @@ public class OrderHistoryFragment extends BaseFragment implements IFragmentTitle
                     list.add(new OrderHistoryBean());
                 }
                 if (adapter == null) {
-                    adapter = new OrderHistoryAdapter(list, getActivity());
+                    adapter = new OrderHistoryAdapter(getActivity());
+                    adapter.setList(list);
                     listview.setAdapter(adapter);
                 }else{
                     adapter.add(list);

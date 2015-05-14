@@ -37,8 +37,7 @@ public abstract class BaseAdapter<E> extends android.widget.BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public BaseAdapter(List<E> list, Context context) {
-        this.list = list;
+    public BaseAdapter(Context context) {
         this.context = context;
     }
 

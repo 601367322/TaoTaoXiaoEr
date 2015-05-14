@@ -7,11 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ttxr.bean.MenuBean;
 import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseAdapter;
-
-import java.util.List;
+import com.ttxr.bean.MenuBean;
 
 import butterknife.ButterKnife;
 import butterknife.FindView;
@@ -21,8 +19,8 @@ import butterknife.FindView;
  */
 public class MenuAdapter extends BaseAdapter<MenuBean> {
 
-    public MenuAdapter(List list, Context context) {
-        super(list, context);
+    public MenuAdapter(Context context) {
+        super(context);
     }
 
     @Override

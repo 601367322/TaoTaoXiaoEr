@@ -7,14 +7,16 @@ import android.view.ViewGroup;
 import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseAdapter;
 import com.ttxr.activity.base.BaseHolder;
-import com.ttxr.bean.OrderHistoryBean;
+
+import java.util.List;
 
 /**
- * Created by mr.shen on 2015/4/25.
+ * Created by sbb on 2015/5/14.
  */
-public class OrderHistoryAdapter extends BaseAdapter<OrderHistoryBean> {
+public class MessageAdapter extends BaseAdapter {
 
-    public OrderHistoryAdapter(Context context) {
+
+    public MessageAdapter(Context context) {
         super(context);
     }
 
@@ -23,7 +25,7 @@ public class OrderHistoryAdapter extends BaseAdapter<OrderHistoryBean> {
         super.getView(position, convertView, parent);
         ViewHolder holder = null;
         if (convertView == null) {
-            convertView = getConvertView(R.layout.order_history_fragment_list_item);
+            convertView = getConvertView(R.layout.message_fragment_list_item);
             holder = new ViewHolder(convertView);
         } else {
             holder = (ViewHolder) convertView.getTag();

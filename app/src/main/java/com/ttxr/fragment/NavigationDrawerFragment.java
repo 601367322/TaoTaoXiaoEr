@@ -45,7 +45,8 @@ public class NavigationDrawerFragment extends BaseFragment {
         list.add(new MenuBean(R.drawable.menu_icon3, getActivity().getString(R.string.message_center), false));
         list.add(new MenuBean(R.drawable.menu_icon4, getActivity().getString(R.string.my_account), false));
         list.add(new MenuBean(R.drawable.menu_icon5, getActivity().getString(R.string.setting), false));
-        adapter = new MenuAdapter(list, getActivity());
+        adapter = new MenuAdapter(getActivity());
+        adapter.setList(list);
         listView.setAdapter(adapter);
     }
 
