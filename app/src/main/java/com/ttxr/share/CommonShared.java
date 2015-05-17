@@ -10,8 +10,9 @@ public class CommonShared {
     public static final int ON = 1;
 
     private final String HAVE_WELCOME = "have_welcome_v1";
-
     private final String PUSH_SWITCH = "push_switch";
+    private final String LAT = "lat";
+    private final String LNG = "lng";
 
     public CommonShared(Context context) {
         sp = SharedDataUtil.getInstance(context);
@@ -35,5 +36,24 @@ public class CommonShared {
     public int getPushSwitch() {
         return sp.getInt(PUSH_SWITCH, ON);
     }
+
+    public String getLat() {
+        return sp.getString(LAT, "");
+    }
+
+    public void setLat(String str) {
+        editor.putString(LAT, str);
+        editor.commit();
+    }
+
+    public String getLng() {
+        return sp.getString(LNG, "");
+    }
+
+    public void setLng(String str) {
+        editor.putString(LNG, str);
+        editor.commit();
+    }
+
 
 }

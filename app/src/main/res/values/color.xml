@@ -5,7 +5,7 @@
     <color name="white">#fff</color>
     <color name="black">#000</color>
     <color name="transparent">#00000000</color>
-    <color name="activity_bg">#efefef</color>
+    <color name="activity_bg">#ffffff</color>
 
     <color name="menu_background">#7f000000</color>
     <color name="menu_background_selected">#7f595959</color>
@@ -14,4 +14,7 @@
     <color name="account_line">#9b9b9b</color>
     <color name="dfdfdf">#dfdfdf</color>
     <color name="f4f4f4">#f4f4f4</color>
+
+    <color name="edit_color">#838383</color>
+    <color name="c333333">#333333</color>
 </resources>

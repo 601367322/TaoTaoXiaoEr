@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <layer-list>
+            <item>
+                <shape>
+                    <solid android:color="@color/account_line" />
+                    <corners android:radius="2dp" />
+                </shape>
+            </item>
+            <item android:bottom="1px" android:top="1px" android:left="1px" android:right="1px">
+                <shape>
+                    <solid android:color="@color/white" />
+                    <corners android:radius="2dp" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

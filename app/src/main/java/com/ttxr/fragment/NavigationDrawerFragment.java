@@ -14,17 +14,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseFragment;
 import com.ttxr.adapter.MenuAdapter;
 import com.ttxr.bean.MenuBean;
+import com.ttxr.bean.UserBean;
+import com.ttxr.db.DBHelper;
+import com.ttxr.weight.CircleImageView;
 
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.ViewById;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +43,18 @@ public class NavigationDrawerFragment extends BaseFragment {
     ListView listView;
     MenuAdapter adapter;
 
+    RuntimeExceptionDao<UserBean, Integer> userDao;
+    @ViewById
+    CircleImageView logo;
+    @ViewById
+    TextView name;
+    @ViewById
+    TextView phone;
+
     @Override
     public void afterViews() {
-
+        super.afterViews();
+        userDao = DBHelper.getDao_(getActivity(), UserBean.class);
         List<MenuBean> list = new ArrayList<>();
         list.add(new MenuBean(R.drawable.menu_icon1, getActivity().getString(R.string.my_order), false));
         list.add(new MenuBean(R.drawable.menu_icon2, getActivity().getString(R.string.order_history), false));
@@ -48,6 +64,19 @@ public class NavigationDrawerFragment extends BaseFragment {
         adapter = new MenuAdapter(getActivity());
         adapter.setList(list);
         listView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            UserBean bean = userDao.queryForFirst(userDao.queryBuilder().prepare());
+            ImageLoader.getInstance().displayImage(bean.getPhotoUrl(),logo);
+            name.setText(bean.getNickName());
+            phone.setText(bean.getUserPhone());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Click(R.id.head)

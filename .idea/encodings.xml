@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
-    <file url="file://$PROJECT_DIR$/app/libs/ormlite-android-4.48.jar" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/libs/ormlite-core-4.48.jar" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/ttxr/application/AM.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/ttxr/db/DBHelper.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/ttxr/fragment/NavigationDrawerFragment.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/ttxr/location/GDLocation.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/ttxr/location/ILocationImpl.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/ttxr/share/CommonShared.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/ttxr/share/DataType.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/ttxr/share/LocalSqLiteHelper.java" charset="GBK" />

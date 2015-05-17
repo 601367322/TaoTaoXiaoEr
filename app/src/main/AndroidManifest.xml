@@ -30,6 +30,25 @@
 
         </activity>
 
+        <!-- 登录注册选择界面 -->
+        <activity android:name=".LoginAndRegActivity_"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".user.RegActivity_"
+            android:label="@string/fast_reg"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".user.SetPassWordActivity_"
+            android:label="@string/fast_reg"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".user.LoginActivity_"
+            android:label="@string/login"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".user.NewAddressActivity_"
+            android:label="@string/new_address"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".user.SetNickNameActivity_"
+            android:label="更改昵称"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".WelcomeActivity_"
             android:screenOrientation="portrait"

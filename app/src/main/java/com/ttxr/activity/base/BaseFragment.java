@@ -20,12 +20,15 @@ public class BaseFragment extends Fragment {
 
     @AfterViews
     public void afterViews() {
+        if (getActivity() == null) {
+            return;
+        }
     }
 
     Toast toast;
 
     public void toast(String str) {
-        if(getActivity()!=null) {
+        if (getActivity() != null) {
             toast = Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT);
             toast.show();
         }

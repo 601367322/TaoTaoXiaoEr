@@ -1,15 +1,13 @@
 package com.ttxr.fragment;
 
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.widget.Switch;
+import android.support.v7.widget.SwitchCompat;
 import android.widget.TextView;
 
 import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseFragment;
 import com.ttxr.interfaces.IFragmentTitle;
 import com.ttxr.share.CommonShared;
+import com.ttxr.util.Util;
 import com.umeng.fb.FeedbackAgent;
 import com.umeng.message.PushAgent;
 import com.umeng.update.UmengUpdateAgent;
@@ -30,12 +28,11 @@ public class SettingFragment extends BaseFragment implements IFragmentTitle {
     @ViewById
     TextView versionName;
     @ViewById
-    Switch push_switch;
+    SwitchCompat push_switch;
 
     @Override
     public void afterViews() {
-        versionName.setText("当前版本：" + getAppVersionName(getActivity()));
-
+        versionName.setText("当前版本：" + Util.getAppVersionName(getActivity()));
         int switcher = ac.cs.getPushSwitch();
         if(switcher == CommonShared.ON){
             push_switch.setChecked(true);
@@ -83,18 +80,4 @@ public class SettingFragment extends BaseFragment implements IFragmentTitle {
         }
     }
 
-    public static String getAppVersionName(Context context) {
-        String versionName = "";
-        try {
-            // ---get the package info---
-            PackageManager pm = context.getPackageManager();
-            PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
-            versionName = pi.versionName;
-            if (versionName == null || versionName.length() <= 0) {
-                return "";
-            }
-        } catch (Exception e) {
-        }
-        return versionName;
-    }
 }

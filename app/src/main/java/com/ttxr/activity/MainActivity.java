@@ -8,9 +8,7 @@ import com.ttxr.activity.base.BaseActivity;
 import com.ttxr.fragment.MapFragment_;
 import com.ttxr.fragment.NavigationDrawerFragment;
 import com.ttxr.interfaces.IFragmentTitle;
-import com.ttxr.util.LogUtil;
 import com.umeng.message.PushAgent;
-import com.umeng.message.UmengRegistrar;
 import com.umeng.update.UmengUpdateAgent;
 
 import org.androidannotations.annotations.EActivity;
@@ -31,6 +29,7 @@ public class MainActivity extends BaseActivity implements NavigationDrawerFragme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
     }
 
     @Override
@@ -42,10 +41,6 @@ public class MainActivity extends BaseActivity implements NavigationDrawerFragme
 
         //umeng 更新
         UmengUpdateAgent.update(this);
-
-        //获取token
-        String device_token = UmengRegistrar.getRegistrationId(getApplicationContext());
-        LogUtil.d(device_token);
 
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,

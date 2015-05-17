@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:padding="14dp"
+    android:background="@color/activity_bg"
+    android:layout_height="match_parent">
+
+
+    <EditText
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:background="@drawable/login_edit_text_top_bg"
+        android:textSize="@dimen/setting_title_size"
+        android:gravity="center_vertical"
+        android:inputType="phone"
+        android:hint="@string/user_phone"
+        android:layout_marginTop="16dp"
+        android:text="13488616135"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="@color/setting_title"
+        android:layout_height="45dp" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:background="@drawable/login_edit_text_bottom_bg"
+        android:textSize="@dimen/setting_title_size"
+        android:gravity="center_vertical"
+        android:inputType="textPassword"
+        android:hint="@string/password"
+        android:paddingLeft="16dp"
+        android:text="123456"
+        android:paddingRight="16dp"
+        android:textColor="@color/setting_title"
+        android:layout_height="45dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/to_reg"
+            android:layout_width="wrap_content"
+            android:text="@string/fast_reg"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/setting_title_size"
+            android:textColor="@color/c333333"
+            android:layout_height="40dp" />
+        <TextView
+            android:id="@+id/find_password"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:gravity="center_vertical"
+            android:text="@string/find_password"
+            android:textSize="@dimen/setting_title_size"
+            android:textColor="@color/c333333"
+            android:layout_height="40dp" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="match_parent"
+        android:background="@drawable/reg_next_btn_select"
+        android:enabled="false"
+        android:text="@string/login"
+        android:layout_marginTop="16dp"
+        android:textColor="@drawable/reg_next_btn_text_select"
+        android:layout_height="44dp" />
+</LinearLayout>

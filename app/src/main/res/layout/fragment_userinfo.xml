@@ -8,10 +8,13 @@
 
     <LinearLayout
         android:orientation="vertical"
+        android:divider="@drawable/bottom_line_bg"
+        android:showDividers="middle|end"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/logo_btn"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
             android:layout_width="match_parent"
@@ -43,6 +46,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/nickname_btn"
             android:layout_width="match_parent"
             android:clickable="true"
             android:background="@drawable/item_have_btm_line_bg"
@@ -73,6 +77,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/address_btn"
             android:layout_width="match_parent"
             android:background="@drawable/item_have_btm_line_bg"
             android:clickable="true"
@@ -103,6 +108,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/sex_btn"
             android:layout_width="match_parent"
             android:background="@drawable/item_have_btm_line_bg"
             android:gravity="center_vertical"

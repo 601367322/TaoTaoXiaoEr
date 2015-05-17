@@ -1,10 +1,12 @@
 package com.ttxr.activity.base;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
+import com.ttxr.application.AM;
 import com.ttxr.application.AppClass;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
@@ -22,6 +24,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     @App
     public AppClass ac;
 
+    public Context context;
+
     @AfterViews
     public void afterViews() {
     }
@@ -34,14 +38,23 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PushAgent.getInstance(getApplicationContext()).onAppStart();
+        AM.getActivityManager().pushActivity(this);
+        context = this;
     }
 
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AM.getActivityManager().popActivity(this);
     }
 }
