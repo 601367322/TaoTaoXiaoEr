@@ -9,11 +9,11 @@ import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseBackActivity;
 import com.ttxr.application.AM;
 import com.ttxr.bean.request_model.RegisterRequestDTO;
-import com.ttxr.util.DeviceUuidFactory;
 import com.ttxr.util.MD5andKL;
 import com.ttxr.util.MyJsonHttpResponseHandler;
 import com.ttxr.util.Url;
 import com.ttxr.util.Util;
+import com.umeng.message.UmengRegistrar;
 
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -41,16 +41,23 @@ public class SetPassWordActivity extends BaseBackActivity {
         RegisterRequestDTO request = new RegisterRequestDTO();
         request.setUserAccount(phone);
         request.setUserPassword(MD5andKL.MD5(password.getText().toString()));
-        request.setUserMsgId(new DeviceUuidFactory(this).getDeviceUuid().toString());
+
+        String device_token = UmengRegistrar.getRegistrationId(getApplicationContext());
+        if (!Util.isEmpty(device_token)) {
+            request.setUserMsgId(device_token);
+        }
         request.setRegSource("1");
         request.setVersion(Util.getAppVersionName(this));
-        request.setUserLatitude(ac.cs.getLat());
-        request.setUserLongitude(ac.cs.getLng());
+
+        if (!ac.cs.getLat().equals("")) {
+            request.setUserLatitude(ac.cs.getLat());
+            request.setUserLongitude(ac.cs.getLng());
+        }
 
         ac.httpClient.post(this, Url.REG, Util.getDefaultRequestParams(request), new MyJsonHttpResponseHandler(context, getString(R.string.reging)) {
 
             @Override
-            public void onSuccessRetCode(JSONObject jo) throws Throwable{
+            public void onSuccessRetCode(JSONObject jo) throws Throwable {
                 Util.toast(context, jo.optString(Url.RET_MESSAGE));
                 AM.getActivityManager().popActivity(RegActivity_.class);
                 AM.getActivityManager().popActivity(LoginActivity_.class);

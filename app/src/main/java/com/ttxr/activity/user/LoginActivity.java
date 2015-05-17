@@ -34,7 +34,7 @@ import org.json.JSONObject;
  */
 
 @EActivity(R.layout.activity_login)
-public class LoginActivity extends BaseBackActivity {
+public class  LoginActivity extends BaseBackActivity {
 
 
     @ViewById

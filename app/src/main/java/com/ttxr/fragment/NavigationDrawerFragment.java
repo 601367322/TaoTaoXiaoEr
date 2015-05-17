@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseFragment;
@@ -51,6 +52,9 @@ public class NavigationDrawerFragment extends BaseFragment {
     @ViewById
     TextView phone;
 
+    public static final DisplayImageOptions options_no_default = new DisplayImageOptions.Builder()
+            .cacheInMemory(true).cacheOnDisk(true).showImageForEmptyUri(R.drawable.default_logo).showImageOnFail(R.drawable.default_logo).showImageOnLoading(R.drawable.default_logo).build();
+
     @Override
     public void afterViews() {
         super.afterViews();
@@ -74,7 +78,7 @@ public class NavigationDrawerFragment extends BaseFragment {
             ImageLoader.getInstance().displayImage(bean.getPhotoUrl(),logo);
             name.setText(bean.getNickName());
             phone.setText(bean.getUserPhone());
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
