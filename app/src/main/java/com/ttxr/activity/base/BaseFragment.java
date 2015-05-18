@@ -13,7 +13,7 @@ import org.androidannotations.annotations.EFragment;
  * Created by mr.shen on 2015/4/19.
  */
 @EFragment
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
 
     @App
     public AppClass ac;

@@ -5,10 +5,10 @@
     android:background="@color/activity_bg"
     android:fillViewport="true">
 
-    <LinearLayout
+    <LinearLayoutCompat
         android:layout_width="match_parent"
         android:divider="@drawable/bottom_line_bg"
-        android:showDividers="middle|end"
+        android:showDividers="middle|end|beginning|none"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
@@ -101,5 +101,5 @@
             android:text="@string/exit"
             android:textColor="@color/abc_primary_text_material_dark"
             android:textSize="18sp" />
-    </LinearLayout>
+    </LinearLayoutCompat>
 </ScrollView>
