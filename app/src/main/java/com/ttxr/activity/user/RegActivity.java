@@ -1,21 +1,23 @@
 package com.ttxr.activity.user;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.ttxr.activity.LoginAndRegActivity_;
+import com.ttxr.activity.MainActivity_;
 import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseBackActivity;
+import com.ttxr.application.AM;
+import com.ttxr.bean.request_model.RegisterRequestDTO;
 import com.ttxr.location.GDLocation;
+import com.ttxr.util.MD5andKL;
 import com.ttxr.util.MyJsonHttpResponseHandler;
+import com.ttxr.util.Url;
 import com.ttxr.util.Util;
+import com.umeng.message.UmengRegistrar;
 
-import org.androidannotations.annotations.CheckedChange;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.TextChange;
@@ -31,11 +33,7 @@ public class RegActivity extends BaseBackActivity {
     @ViewById
     EditText phone;
     @ViewById
-    EditText code;
-    @ViewById
-    Button code_btn;
-    @ViewById
-    CheckBox agree;
+    EditText password;
     @ViewById
     Button reg_next;
 
@@ -50,45 +48,43 @@ public class RegActivity extends BaseBackActivity {
 
     @Click
     public void reg_next() {
-        final String str_phone = phone.getText().toString();
-        String str_code = code.getText().toString();
-        boolean b_agree = agree.isChecked();
-
-        SetPassWordActivity_.intent(this).phone(str_phone).start();
-    }
-
-    @Click
-    public void code_btn() {
         String str_phone = phone.getText().toString();
+
         if (Util.isMobileNO(str_phone)) {
 
-            new AlertDialog.Builder(this).setTitle(getString(R.string.reg_phone_alert_title)).setMessage(str_phone).setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                }
-            }).setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    phone.setVisibility(View.GONE);
-                    remind_text.setVisibility(View.VISIBLE);
-                    code.setEnabled(true);
-                }
-            }).create().show();
+            RegisterRequestDTO request = new RegisterRequestDTO();
+            request.setUserAccount(str_phone);
+            request.setUserPassword(MD5andKL.MD5(password.getText().toString()));
 
-            ac.httpClient.post(this, "", null, new MyJsonHttpResponseHandler(this) {
+            String device_token = UmengRegistrar.getRegistrationId(getApplicationContext());
+            if (!Util.isEmpty(device_token)) {
+                request.setUserMsgId(device_token);
+            }
+            request.setRegSource("1");
+            request.setVersion(Util.getAppVersionName(this));
 
-                @Override
-                public void onSuccessRetCode(JSONObject jo) {
+            if (!ac.cs.getLat().equals("")) {
+                request.setUserLatitude(ac.cs.getLat());
+                request.setUserLongitude(ac.cs.getLng());
+            }
 
-                }
+            ac.httpClient.post(this, Url.REG, Util.getDefaultRequestParams(request), new MyJsonHttpResponseHandler(context, getString(R.string.reging)) {
 
                 @Override
-                public void onFailRetCode(JSONObject jo) {
-
+                public void onSuccessRetCode(JSONObject jo) throws Throwable {
+                    Util.toast(context, jo.optString(Url.RET_MESSAGE));
+                    AM.getActivityManager().popActivity(LoginActivity_.class);
+                    AM.getActivityManager().popActivity(LoginAndRegActivity_.class);
+                    finish();
+                    if (!AM.getActivityManager().contains(MainActivity_.class)) {
+                        MainActivity_.intent(context).start();
+                    }
                 }
+
             });
         }
     }
+
 
     @TextChange
     public void phone() {
@@ -96,21 +92,16 @@ public class RegActivity extends BaseBackActivity {
     }
 
     @TextChange
-    public void code() {
+    public void password() {
         checkEnableNextBtn();
     }
 
-    @CheckedChange
-    public void agree() {
-        checkEnableNextBtn();
-    }
 
     public void checkEnableNextBtn() {
         String str_phone = phone.getText().toString();
-        String str_code = code.getText().toString();
-        boolean b_agree = agree.isChecked();
+        String str_code = password.getText().toString();
 
-        if (Util.isMobileNO(str_phone) && Util.isCode(str_code) && b_agree) {
+        if (Util.isMobileNO(str_phone) && Util.isPassword(str_code)) {
             reg_next.setEnabled(true);
         } else {
             reg_next.setEnabled(false);

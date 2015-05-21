@@ -14,6 +14,7 @@ import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseBackActivity;
 import com.ttxr.application.AM;
 import com.ttxr.bean.UserBean;
+import com.ttxr.bean.UserBeanTable;
 import com.ttxr.bean.request_model.LoginRequestDTO;
 import com.ttxr.db.DBHelper;
 import com.ttxr.location.GDLocation;
@@ -47,13 +48,13 @@ public class  LoginActivity extends BaseBackActivity {
     TextView findPassword;
     @ViewById
     Button loginBtn;
-    RuntimeExceptionDao<UserBean, Integer> userDao;
+    RuntimeExceptionDao<UserBeanTable, Integer> userDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         new GDLocation(this, null, true);
-        userDao = DBHelper.getDao_(this, UserBean.class);
+        userDao = DBHelper.getDao_(this, UserBeanTable.class);
     }
 
     @Click
@@ -75,7 +76,7 @@ public class  LoginActivity extends BaseBackActivity {
                 UserBean userBean = new Gson().fromJson(jo.getString("user"), new TypeToken<UserBean>() {
                 }.getType());
                 if (userBean != null) {
-                    userDao.createOrUpdate(userBean);
+                    userDao.createOrUpdate(new UserBeanTable(userBean));
                     AM.getActivityManager().popActivity(LoginAndRegActivity_.class);
                     finish();
                     MainActivity_.intent(context).start();

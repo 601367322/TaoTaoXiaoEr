@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.ttxr.activity.R;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -51,7 +52,14 @@ public abstract class MyJsonHttpResponseHandler extends JsonHttpResponseHandler 
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         super.onFailure(statusCode, headers, throwable, errorResponse);
-        onFailure();
+        switch (statusCode){
+            case 401:
+                Util.toast(context, context.getString(R.string.unlogin));
+                break;
+            default:
+                onFailure();
+                break;
+        }
     }
 
     @Override

@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.ttxr.application.AppClass;
-import com.ttxr.bean.UserBean;
+import com.ttxr.bean.UserBeanTable;
 import com.ttxr.db.DBHelper;
 
 import org.androidannotations.annotations.App;
@@ -24,7 +24,7 @@ public class WelcomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        RuntimeExceptionDao<UserBean, Integer> userDao = DBHelper.getDao_(this, UserBean.class);
+        RuntimeExceptionDao<UserBeanTable, Integer> userDao = DBHelper.getDao_(this, UserBeanTable.class);
         long count = userDao.countOf();
         if(count>0){
             MainActivity_.intent(this).start();
