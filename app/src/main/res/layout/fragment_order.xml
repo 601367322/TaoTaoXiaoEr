@@ -63,28 +63,11 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
-
-    <com.ttxr.weight.swipe.SwipeRefreshLayout
-        android:id="@+id/refresh_layout"
-        android:layout_width="match_parent"
+    <FrameLayout
+        android:id="@+id/list_content"
         android:layout_below="@+id/all_tab"
-        android:layout_height="match_parent">
-
-        <com.ttxr.weight.listview.XListView
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:cacheColorHint="@color/transparent"
-            android:divider="@null"
-            android:dividerHeight="0dp"
-            android:fadingEdge="none"
-            android:focusable="false"
-            android:id="@+id/listview"
-            android:listSelector="@color/transparent"
-            android:layout_height="match_parent">
-
-        </com.ttxr.weight.listview.XListView>
-    </com.ttxr.weight.swipe.SwipeRefreshLayout>
-
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
     <RelativeLayout
         android:id="@+id/time_select_item"
         android:visibility="gone"

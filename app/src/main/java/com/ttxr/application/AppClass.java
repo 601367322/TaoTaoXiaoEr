@@ -7,6 +7,7 @@ import com.loopj.android.http.PersistentCookieStore;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.utils.L;
 import com.ttxr.share.CommonShared;
 import com.umeng.fb.push.FeedbackPush;
 
@@ -33,8 +34,8 @@ public class AppClass extends Application {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
                 getApplicationContext()).defaultDisplayImageOptions(
                 options_no_default).build();
-//        L.writeLogs(false);
-//        L.writeDebugLogs(false);
+        L.writeLogs(false);
+        L.writeDebugLogs(false);
         ImageLoader.getInstance().init(config);
 
         cs=new CommonShared(this);

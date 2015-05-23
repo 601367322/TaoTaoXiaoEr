@@ -28,7 +28,7 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/normal_edit_text_bg"
         android:gravity="center_vertical"
-        android:hint="@string/code"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"

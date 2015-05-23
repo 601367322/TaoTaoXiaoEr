@@ -61,4 +61,9 @@ public class MainActivity extends BaseActivity implements NavigationDrawerFragme
         }
         mNavigationDrawerFragment.closeDrawer();
     }
+
+    /*@Override
+    public boolean destoryPop() {
+        return false;
+    }*/
 }

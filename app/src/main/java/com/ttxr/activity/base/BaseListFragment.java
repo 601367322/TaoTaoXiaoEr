@@ -13,6 +13,8 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.List;
+
 /**
  * Created by sbb on 2015/5/14.
  */
@@ -28,7 +30,9 @@ public abstract class BaseListFragment<T> extends BaseFragment implements IFragm
 
     public View emptyView;
 
-    public int page = 0;
+    public int currentPage = 0;
+    public int totalPage = 1;
+    public int pageSize = 10;
 
     @Override
     public void afterViews() {
@@ -47,6 +51,11 @@ public abstract class BaseListFragment<T> extends BaseFragment implements IFragm
         refresh();
     }
 
+    @Override
+    public void onLoadMore() {
+        onRefresh();
+    }
+
     @UiThread
     public void refresh() {
         refreshLayout.setRefreshing(true);
@@ -58,4 +67,21 @@ public abstract class BaseListFragment<T> extends BaseFragment implements IFragm
 
     public abstract BaseAdapter<T> getAdapter();
 
+    public void onSuccessRefreshUI(List list) {
+        if (list != null) {
+            adapter.setList(list);
+            adapter.notifyDataSetChanged();
+            currentPage++;
+        }
+        if (currentPage >= totalPage) {
+            listview.setPage(-1);
+        } else {
+            listview.setPage(currentPage);
+        }
+    }
+
+    public void onFinshRefreshUI() {
+        refreshLayout.setRefreshing(false);
+        listview.stop();
+    }
 }

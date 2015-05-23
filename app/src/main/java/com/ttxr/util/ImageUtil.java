@@ -6,12 +6,24 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.ttxr.activity.R;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class ImageUtil {
+
+    public static final DisplayImageOptions options_no_default = new DisplayImageOptions.Builder()
+            .cacheInMemory(true).cacheOnDisk(true).build();
+
+    public static final DisplayImageOptions options_default = new DisplayImageOptions.Builder()
+            .showImageOnLoading(R.drawable.default_logo)
+            .showImageOnFail(R.drawable.default_logo)
+            .showImageForEmptyUri(R.drawable.default_logo)
+            .cacheInMemory(true).cacheOnDisk(true).build();
 
     public static int px2dip(Context context, float pxValue) {
         final float scale = context.getResources().getDisplayMetrics().density;

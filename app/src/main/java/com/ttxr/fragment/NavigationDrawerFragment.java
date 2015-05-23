@@ -11,13 +11,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.j256.ormlite.dao.RuntimeExceptionDao;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseFragment;
@@ -25,6 +25,7 @@ import com.ttxr.adapter.MenuAdapter;
 import com.ttxr.bean.MenuBean;
 import com.ttxr.bean.UserBeanTable;
 import com.ttxr.db.DBHelper;
+import com.ttxr.util.ImageUtil;
 import com.ttxr.weight.CircleImageView;
 
 import org.androidannotations.annotations.Click;
@@ -51,9 +52,6 @@ public class NavigationDrawerFragment extends BaseFragment {
     @ViewById
     TextView phone;
 
-    public static final DisplayImageOptions options_no_default = new DisplayImageOptions.Builder()
-            .cacheInMemory(true).cacheOnDisk(true).showImageForEmptyUri(R.drawable.default_logo).showImageOnFail(R.drawable.default_logo).showImageOnLoading(R.drawable.default_logo).build();
-
     @Override
     public void afterViews() {
         super.afterViews();
@@ -74,8 +72,12 @@ public class NavigationDrawerFragment extends BaseFragment {
         super.onResume();
         try {
             UserBeanTable bean = userDao.queryForFirst(userDao.queryBuilder().prepare());
-            ImageLoader.getInstance().displayImage(bean.bean.photoUrl,logo);
-            name.setText(bean.bean.nickName);
+            ImageLoader.getInstance().displayImage(bean.bean.photoUrl, logo, ImageUtil.options_default);
+            if(TextUtils.isEmpty(bean.bean.nickName)){
+                name.setText(getString(R.string.app_name));
+            }else {
+                name.setText(bean.bean.nickName);
+            }
             phone.setText(bean.bean.userAccount);
         } catch (Exception e) {
             e.printStackTrace();

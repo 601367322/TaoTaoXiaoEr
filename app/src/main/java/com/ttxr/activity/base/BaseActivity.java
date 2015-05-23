@@ -1,6 +1,7 @@
 package com.ttxr.activity.base;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -38,7 +39,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PushAgent.getInstance(getApplicationContext()).onAppStart();
-        AM.getActivityManager().pushActivity(this);
+//        if(destoryPop()) {
+            AM.getActivityManager().pushActivity(this);
+//        }
         context = this;
     }
 
@@ -55,6 +58,16 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        AM.getActivityManager().popActivity(this);
+//        if(destoryPop()) {
+            AM.getActivityManager().popActivity(this);
+//        }
+    }
+
+    public boolean destoryPop(){
+        return true;
+    }
+
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 }

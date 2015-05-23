@@ -32,19 +32,27 @@ import com.amap.api.maps.model.MyLocationStyle;
 import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseFragment;
 import com.ttxr.interfaces.IFragmentTitle;
+import com.ttxr.util.MyJsonHttpResponseHandler;
+import com.ttxr.util.Url;
+import com.ttxr.util.Util;
+import com.ttxr.weight.swipe.SwipeRefreshLayout;
 
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONObject;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @EFragment(R.layout.activity_fragment)
 @OptionsMenu(R.menu.emoticon_menu)
-public class MapFragment extends BaseFragment implements IFragmentTitle, LocationSource, AMapLocationListener, SensorEventListener, AMap.InfoWindowAdapter {
+public class MapFragment extends BaseFragment implements IFragmentTitle, LocationSource, AMapLocationListener, SensorEventListener, AMap.InfoWindowAdapter,SwipeRefreshLayout.OnRefreshListener {
 
     @ViewById(R.id.map)
     public MapView mapView;//地图
+    @ViewById
+    SwipeRefreshLayout swipe;
     private AMap aMap;
     private OnLocationChangedListener mListener;
     private LocationManagerProxy mAMapLocationManager;
@@ -70,6 +78,12 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
     @Override
     public void afterViews() {
         mapView.onCreate(null);
+        swipe.setOnRefreshListener(this);
+    }
+
+    @UiThread
+    public void refresh(){
+        swipe.setRefreshing(true);
     }
 
     @Override
@@ -319,5 +333,21 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
     @Override
     public int getFragmentTitle() {
         return R.string.app_name;
+    }
+
+    @Override
+    public void onRefresh() {
+        ac.httpClient.post(Url.GET_ORDER_REQUEST, Util.getTokenRequestParams(getActivity(),null), new MyJsonHttpResponseHandler(getActivity()) {
+            @Override
+            public void onSuccessRetCode(JSONObject jo) throws Throwable {
+
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                swipe.setRefreshing(false);
+            }
+        });
     }
 }

@@ -52,4 +52,12 @@
     <string name="reging">正在注册</string>
     <string name="unknow">未知错误</string>
     <string name="unlogin">未登录</string>
+    <string name="please_set_nickname">请输入昵称</string>
+    <string name="too_long_nickname">昵称必须小于12个字</string>
+    <string name="saving">正在保存</string>
+    <string name="man">男</string>
+    <string name="woman">女</string>
+    <string name="please_set_address">请输入地址</string>
+    <string name="camera">相册</string>
+    <string name="album">拍照</string>
 </resources>
