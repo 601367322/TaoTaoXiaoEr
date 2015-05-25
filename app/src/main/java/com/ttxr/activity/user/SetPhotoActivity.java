@@ -14,6 +14,7 @@ import com.loopj.android.http.RequestParams;
 import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseActivity;
 import com.ttxr.bean.UserBeanTable;
+import com.ttxr.db.DBHelper;
 import com.ttxr.util.ImageUtil;
 import com.ttxr.util.MyJsonHttpResponseHandler;
 import com.ttxr.util.StaticUtil;
@@ -154,7 +155,10 @@ public class SetPhotoActivity extends BaseActivity {
         }) {
             @Override
             public void onSuccessRetCode(JSONObject jo) throws Throwable {
-
+                if(jo.has("photoUrl")){
+                    bean.bean.photoUrl = jo.optString("photoUrl");
+                    DBHelper.getUserDao(getApplicationContext()).createOrUpdate(bean);
+                }
             }
 
             @Override
