@@ -1,6 +1,7 @@
 package com.ttxr.activity.user;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -35,7 +36,7 @@ import org.json.JSONObject;
  */
 
 @EActivity(R.layout.activity_login)
-public class  LoginActivity extends BaseBackActivity {
+public class LoginActivity extends BaseBackActivity {
 
 
     @ViewById
@@ -108,7 +109,7 @@ public class  LoginActivity extends BaseBackActivity {
     public void checkLoginBtn() {
         String str_phone = phone.getText().toString();
         String str_password = password.getText().toString();
-        if (Util.isMobileNO(str_phone) && Util.isPassword(str_password)) {
+        if (!TextUtils.isEmpty(str_phone) && !TextUtils.isEmpty(str_password)) {
             loginBtn.setEnabled(true);
         } else {
             loginBtn.setEnabled(false);

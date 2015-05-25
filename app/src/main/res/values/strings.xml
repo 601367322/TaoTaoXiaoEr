@@ -60,4 +60,8 @@
     <string name="please_set_address">请输入地址</string>
     <string name="camera">相册</string>
     <string name="album">拍照</string>
+    <string name="please_set_right_phone">请输入正确手机号</string>
+    <string name="phone">电话</string>
+    <string name="username">用户名</string>
+    <string name="empty">无</string>
 </resources>

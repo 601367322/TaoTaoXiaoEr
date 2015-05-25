@@ -1,6 +1,5 @@
 package com.ttxr.activity.user;
 
-import android.text.TextUtils;
 import android.widget.EditText;
 
 import com.ttxr.activity.R;
@@ -20,36 +19,37 @@ import org.androidannotations.annotations.ViewById;
 import org.json.JSONObject;
 
 /**
- * Created by mr.shen on 2015/5/17.
+ * Created by Shen on 2015/5/25.
  */
 @OptionsMenu(R.menu.new_address_menu)
-@EActivity(R.layout.activity_new_address)
-public class NewAddressActivity extends BaseBackActivity {
+@EActivity(R.layout.activity_set_phone)
+public class SetPhoneActivity extends BaseBackActivity{
 
     @ViewById
-    public EditText address;
+    public EditText phone;
     @Extra
     public UserBeanTable bean;
 
     @Override
     public void afterViews() {
         super.afterViews();
-        address.setText(bean.bean.userAddress);
+        phone.setText(bean.bean.userPhone);
     }
 
     @OptionsItem
     public void save(){
-        final String nickname_str = address.getText().toString();
-        if(TextUtils.isEmpty(nickname_str)){
-            Util.toast(this,getString(R.string.please_set_address));
+        final String nickname_str = phone.getText().toString();
+        if(!Util.isMobileNO(nickname_str)){
+            Util.toast(this, getString(R.string.please_set_right_phone));
+            return;
         }
 
         UpdateUserRequestDTO request = new UpdateUserRequestDTO();
-        request.setUserAddress(nickname_str);
+        request.setUserPhone(nickname_str);
         ac.httpClient.post(Url.UPDATE_USERINFO, Util.getTokenRequestParams(this,request), new MyJsonHttpResponseHandler(this,getString(R.string.saving)) {
             @Override
             public void onSuccessRetCode(JSONObject jo) throws Throwable {
-                bean.bean.userAddress = nickname_str;
+                bean.bean.userPhone = nickname_str;
                 DBHelper.getUserDao(getApplicationContext()).createOrUpdate(bean);
                 finish();
             }

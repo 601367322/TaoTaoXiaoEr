@@ -52,8 +52,13 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".user.NewAddressActivity_"
+            android:name=".user.SetAddressActivity_"
             android:label="@string/new_address"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".user.SetPhoneActivity_"
+            android:label="@string/phone"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
         <activity

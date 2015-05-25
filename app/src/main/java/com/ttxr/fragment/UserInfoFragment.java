@@ -10,8 +10,9 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseFragment;
-import com.ttxr.activity.user.NewAddressActivity_;
+import com.ttxr.activity.user.SetAddressActivity_;
 import com.ttxr.activity.user.SetNickNameActivity_;
+import com.ttxr.activity.user.SetPhoneActivity_;
 import com.ttxr.activity.user.SetPhotoActivity_;
 import com.ttxr.bean.UserBeanTable;
 import com.ttxr.bean.request_model.UpdateUserRequestDTO;
@@ -42,6 +43,8 @@ public class UserInfoFragment extends BaseFragment implements IFragmentTitle {
     TextView address;
     @ViewById
     TextView sex;
+    @ViewById
+    TextView phone;
 
     RuntimeExceptionDao<UserBeanTable, Integer> userDao;
 
@@ -61,14 +64,27 @@ public class UserInfoFragment extends BaseFragment implements IFragmentTitle {
         try {
             userBean = userDao.queryForFirst(userDao.queryBuilder().prepare());
             ImageLoader.getInstance().displayImage(userBean.bean.photoUrl, logo, ImageUtil.options_default);
-            nickname.setText(userBean.bean.nickName);
+            if (!TextUtils.isEmpty(userBean.bean.nickName)){
+                nickname.setText(userBean.bean.nickName);
+            }else{
+                nickname.setText(getString(R.string.empty));
+            }
             if (!TextUtils.isEmpty(userBean.bean.userSex)) {
                 if (userBean.bean.userSex.equals("1"))
                     sex.setText(getString(R.string.man));
                 else
                     sex.setText(getString(R.string.woman));
             }
-            address.setText(userBean.bean.userAddress);
+            if (!TextUtils.isEmpty(userBean.bean.userPhone)){
+                phone.setText(userBean.bean.userPhone);
+            }else{
+                phone.setText(getString(R.string.empty));
+            }
+            if (!TextUtils.isEmpty(userBean.bean.userAddress)) {
+                address.setText(userBean.bean.userAddress);
+            }else{
+                address.setText(getString(R.string.empty));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -82,7 +98,7 @@ public class UserInfoFragment extends BaseFragment implements IFragmentTitle {
 
     @Click
     public void address_btn() {
-        NewAddressActivity_.intent(this).bean(userBean).start();
+        SetAddressActivity_.intent(this).bean(userBean).start();
     }
 
     @Click
@@ -107,6 +123,11 @@ public class UserInfoFragment extends BaseFragment implements IFragmentTitle {
                 });
             }
         }).create().show();
+    }
+
+    @Click
+    public void phone_btn(){
+        SetPhoneActivity_.intent(this).bean(userBean).start();
     }
 
     @Click

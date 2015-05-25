@@ -23,37 +23,33 @@ import org.json.JSONObject;
  * Created by mr.shen on 2015/5/17.
  */
 @OptionsMenu(R.menu.new_address_menu)
-@EActivity(R.layout.activity_set_nickname)
-public class SetNickNameActivity extends BaseBackActivity {
+@EActivity(R.layout.activity_new_address)
+public class SetAddressActivity extends BaseBackActivity {
 
     @ViewById
-    public EditText nickname;
+    public EditText address;
     @Extra
     public UserBeanTable bean;
 
     @Override
     public void afterViews() {
         super.afterViews();
-        nickname.setText(bean.bean.nickName);
+        address.setText(bean.bean.userAddress);
     }
 
     @OptionsItem
     public void save(){
-        final String nickname_str = nickname.getText().toString();
+        final String nickname_str = address.getText().toString();
         if(TextUtils.isEmpty(nickname_str)){
-            Util.toast(this,getString(R.string.please_set_nickname));
-            return;
-        }else if(nickname_str.length()>20){
-            Util.toast(this,getString(R.string.too_long_nickname));
-            return;
+            Util.toast(this,getString(R.string.please_set_address));
         }
 
         UpdateUserRequestDTO request = new UpdateUserRequestDTO();
-        request.setNickName(nickname_str);
+        request.setUserAddress(nickname_str);
         ac.httpClient.post(Url.UPDATE_USERINFO, Util.getTokenRequestParams(this,request), new MyJsonHttpResponseHandler(this,getString(R.string.saving)) {
             @Override
             public void onSuccessRetCode(JSONObject jo) throws Throwable {
-                bean.bean.nickName = nickname_str;
+                bean.bean.userAddress = nickname_str;
                 DBHelper.getUserDao(getApplicationContext()).createOrUpdate(bean);
                 finish();
             }

@@ -10,6 +10,9 @@ import android.location.Location;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
@@ -31,15 +34,17 @@ import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseFragment;
+import com.ttxr.bean.UserMsg;
+import com.ttxr.bean.request_model.MyOrderRequestDTO;
 import com.ttxr.interfaces.IFragmentTitle;
 import com.ttxr.util.MyJsonHttpResponseHandler;
 import com.ttxr.util.Url;
 import com.ttxr.util.Util;
-import com.ttxr.weight.swipe.SwipeRefreshLayout;
 
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.OptionsMenu;
-import org.androidannotations.annotations.UiThread;
+import org.androidannotations.annotations.OptionsMenuItem;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONObject;
 
@@ -47,12 +52,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @EFragment(R.layout.activity_fragment)
 @OptionsMenu(R.menu.emoticon_menu)
-public class MapFragment extends BaseFragment implements IFragmentTitle, LocationSource, AMapLocationListener, SensorEventListener, AMap.InfoWindowAdapter,SwipeRefreshLayout.OnRefreshListener {
+public class MapFragment extends BaseFragment implements IFragmentTitle, LocationSource, AMapLocationListener, SensorEventListener, AMap.InfoWindowAdapter {
 
     @ViewById(R.id.map)
     public MapView mapView;//地图
-    @ViewById
-    SwipeRefreshLayout swipe;
+    @OptionsMenuItem
+    MenuItem message;
+    @FragmentArg
+    UserMsg msg;
     private AMap aMap;
     private OnLocationChangedListener mListener;
     private LocationManagerProxy mAMapLocationManager;
@@ -78,12 +85,42 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
     @Override
     public void afterViews() {
         mapView.onCreate(null);
-        swipe.setOnRefreshListener(this);
+
+        if(msg!=null){//如果是从消息进来的
+            MyOrderRequestDTO request1 = new MyOrderRequestDTO();
+            request1.setOrderId(msg.getOrderId());
+            request1.setStatus("1");
+            ac.httpClient.post(Url.GET_MY_ORDER, Util.getTokenRequestParams(getActivity(), request1), new MyJsonHttpResponseHandler(getActivity()) {
+                @Override
+                public void onSuccessRetCode(JSONObject jo) throws Throwable {
+                    message.setVisible(true);
+                }
+
+                @Override
+                public void onFinish() {
+                    super.onFinish();
+                }
+            });
+        }else{
+            ac.httpClient.post(Url.GET_ORDER_REQUEST, Util.getTokenRequestParams(getActivity(), null), new MyJsonHttpResponseHandler(getActivity()) {
+                @Override
+                public void onSuccessRetCode(JSONObject jo) throws Throwable {
+                    message.setVisible(true);
+                }
+
+                @Override
+                public void onFinish() {
+                    super.onFinish();
+                }
+            });
+        }
+
     }
 
-    @UiThread
-    public void refresh(){
-        swipe.setRefreshing(true);
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        message.setVisible(false);
     }
 
     @Override
@@ -335,19 +372,4 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
         return R.string.app_name;
     }
 
-    @Override
-    public void onRefresh() {
-        ac.httpClient.post(Url.GET_ORDER_REQUEST, Util.getTokenRequestParams(getActivity(),null), new MyJsonHttpResponseHandler(getActivity()) {
-            @Override
-            public void onSuccessRetCode(JSONObject jo) throws Throwable {
-
-            }
-
-            @Override
-            public void onFinish() {
-                super.onFinish();
-                swipe.setRefreshing(false);
-            }
-        });
-    }
 }

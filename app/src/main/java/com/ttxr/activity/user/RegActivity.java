@@ -1,6 +1,7 @@
 package com.ttxr.activity.user;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -50,39 +51,37 @@ public class RegActivity extends BaseBackActivity {
     public void reg_next() {
         String str_phone = phone.getText().toString();
 
-        if (Util.isMobileNO(str_phone)) {
 
-            RegisterRequestDTO request = new RegisterRequestDTO();
-            request.setUserAccount(str_phone);
-            request.setUserPassword(MD5andKL.MD5(password.getText().toString()));
+        RegisterRequestDTO request = new RegisterRequestDTO();
+        request.setUserAccount(str_phone);
+        request.setUserPassword(MD5andKL.MD5(password.getText().toString()));
 
-            String device_token = UmengRegistrar.getRegistrationId(getApplicationContext());
-            if (!Util.isEmpty(device_token)) {
-                request.setUserMsgId(device_token);
-            }
-            request.setRegSource("1");
-            request.setVersion(Util.getAppVersionName(this));
-
-            if (!ac.cs.getLat().equals("")) {
-                request.setUserLatitude(ac.cs.getLat());
-                request.setUserLongitude(ac.cs.getLng());
-            }
-
-            ac.httpClient.post(this, Url.REG, Util.getDefaultRequestParams(request), new MyJsonHttpResponseHandler(context, getString(R.string.reging)) {
-
-                @Override
-                public void onSuccessRetCode(JSONObject jo) throws Throwable {
-                    Util.toast(context, jo.optString(Url.RET_MESSAGE));
-                    AM.getActivityManager().popActivity(LoginActivity_.class);
-                    AM.getActivityManager().popActivity(LoginAndRegActivity_.class);
-                    finish();
-                    if (!AM.getActivityManager().contains(MainActivity_.class)) {
-                        MainActivity_.intent(context).start();
-                    }
-                }
-
-            });
+        String device_token = UmengRegistrar.getRegistrationId(getApplicationContext());
+        if (!Util.isEmpty(device_token)) {
+            request.setUserMsgId(device_token);
         }
+        request.setRegSource("1");
+        request.setVersion(Util.getAppVersionName(this));
+
+        if (!ac.cs.getLat().equals("")) {
+            request.setUserLatitude(ac.cs.getLat());
+            request.setUserLongitude(ac.cs.getLng());
+        }
+
+        ac.httpClient.post(this, Url.REG, Util.getDefaultRequestParams(request), new MyJsonHttpResponseHandler(context, getString(R.string.reging)) {
+
+            @Override
+            public void onSuccessRetCode(JSONObject jo) throws Throwable {
+                Util.toast(context, jo.optString(Url.RET_MESSAGE));
+                AM.getActivityManager().popActivity(LoginActivity_.class);
+                AM.getActivityManager().popActivity(LoginAndRegActivity_.class);
+                finish();
+                if (!AM.getActivityManager().contains(MainActivity_.class)) {
+                    MainActivity_.intent(context).start();
+                }
+            }
+
+        });
     }
 
 
@@ -101,7 +100,7 @@ public class RegActivity extends BaseBackActivity {
         String str_phone = phone.getText().toString();
         String str_code = password.getText().toString();
 
-        if (Util.isMobileNO(str_phone) && Util.isPassword(str_code)) {
+        if (!TextUtils.isEmpty(str_phone) && !TextUtils.isEmpty(str_code)) {
             reg_next.setEnabled(true);
         } else {
             reg_next.setEnabled(false);

@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 
 import com.ttxr.activity.base.BaseActivity;
+import com.ttxr.bean.UserMsg;
+import com.ttxr.fragment.MapFragment;
 import com.ttxr.fragment.MapFragment_;
 import com.ttxr.fragment.NavigationDrawerFragment;
 import com.ttxr.interfaces.IFragmentTitle;
@@ -60,6 +62,11 @@ public class MainActivity extends BaseActivity implements NavigationDrawerFragme
             getSupportActionBar().setTitle(((IFragmentTitle) fragment).getFragmentTitle());
         }
         mNavigationDrawerFragment.closeDrawer();
+    }
+
+    public void startMapFragment(UserMsg bean){
+        MapFragment fragment = MapFragment_.builder().msg(bean).build();
+        onNavigationDrawerItemSelected(fragment);
     }
 
     /*@Override

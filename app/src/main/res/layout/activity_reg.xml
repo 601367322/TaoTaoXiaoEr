@@ -12,11 +12,10 @@
         android:layout_height="45dp"
         android:background="@drawable/normal_edit_text_bg"
         android:gravity="center_vertical"
-        android:hint="@string/please_set_phone"
-        android:inputType="phone"
+        android:hint="@string/username"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:text="13488616135"
+        android:maxLength="30"
         android:textColor="#838383"
         android:textSize="15sp"/>
 
@@ -32,7 +31,6 @@
         android:inputType="textPassword"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:text="111111"
         android:textColor="#838383"
         android:textSize="15sp"/>
 
