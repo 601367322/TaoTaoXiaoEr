@@ -1,5 +1,6 @@
 package com.ttxr.fragment;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.hardware.Sensor;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -32,11 +34,16 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.loopj.android.http.RequestParams;
 import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseFragment;
 import com.ttxr.bean.UserMsg;
 import com.ttxr.bean.request_model.MyOrderRequestDTO;
+import com.ttxr.bean.request_model.MyOrderResponseDTO;
 import com.ttxr.interfaces.IFragmentTitle;
+import com.ttxr.util.AnimUtil;
 import com.ttxr.util.MyJsonHttpResponseHandler;
 import com.ttxr.util.Url;
 import com.ttxr.util.Util;
@@ -45,6 +52,7 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.OptionsMenuItem;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONObject;
 
@@ -60,6 +68,18 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
     MenuItem message;
     @FragmentArg
     UserMsg msg;
+    @ViewById
+    TextView title;
+    @ViewById
+    TextView money;
+    @ViewById
+    TextView address;
+    @ViewById
+    TextView state;
+    @ViewById
+    TextView time;
+    @ViewById
+    LinearLayout detail;
     private AMap aMap;
     private OnLocationChangedListener mListener;
     private LocationManagerProxy mAMapLocationManager;
@@ -86,35 +106,58 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
     public void afterViews() {
         mapView.onCreate(null);
 
-        if(msg!=null){//如果是从消息进来的
+        getData();
+    }
+
+    @UiThread(delay = 100)
+    public void getData() {
+        if (msg != null) {//如果是从消息进来的
             MyOrderRequestDTO request1 = new MyOrderRequestDTO();
             request1.setOrderId(msg.getOrderId());
             request1.setStatus("1");
-            ac.httpClient.post(Url.GET_MY_ORDER, Util.getTokenRequestParams(getActivity(), request1), new MyJsonHttpResponseHandler(getActivity()) {
-                @Override
-                public void onSuccessRetCode(JSONObject jo) throws Throwable {
-                    message.setVisible(true);
-                }
-
-                @Override
-                public void onFinish() {
-                    super.onFinish();
-                }
-            });
-        }else{
-            ac.httpClient.post(Url.GET_ORDER_REQUEST, Util.getTokenRequestParams(getActivity(), null), new MyJsonHttpResponseHandler(getActivity()) {
-                @Override
-                public void onSuccessRetCode(JSONObject jo) throws Throwable {
-                    message.setVisible(true);
-                }
-
-                @Override
-                public void onFinish() {
-                    super.onFinish();
-                }
-            });
+            post(Url.GET_MY_ORDER, Util.getTokenRequestParams(getActivity(), request1));
+        } else {
+            post(Url.GET_ORDER_REQUEST, Util.getTokenRequestParams(getActivity(), null));
         }
+    }
 
+    public void post(String url, RequestParams params) {
+        ac.httpClient.post(url, params, new MyJsonHttpResponseHandler(getActivity()) {
+
+            @Override
+            public void onStart() {
+                message.setVisible(true);
+                message.setActionView(R.layout.actionbar_progress);
+            }
+
+            @Override
+            public void onSuccessRetCode(JSONObject jo) throws Throwable {
+                message.setVisible(true);
+                MyOrderResponseDTO bean = new Gson().fromJson(jo.toString(), new TypeToken<MyOrderResponseDTO>() {
+                }.getType());
+                if (bean != null) {
+                    setDetail(bean);
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                message.setActionView(null);
+                message.setVisible(false);
+            }
+        });
+    }
+
+    public void setDetail(MyOrderResponseDTO bean) {
+        detail.setVisibility(View.VISIBLE);
+        detail.measure(0, 0);
+        ObjectAnimator.ofFloat(detail, AnimUtil.TRANSLATIONY, -detail.getMeasuredHeight(), 0).setDuration(200).start();
+        title.setText(bean.getStoreName());
+        money.setText("￥" + bean.getDeliverPrice());
+        address.setText(bean.getPerAddress());
+        state.setText(bean.getStatusStr());
+        time.setText(bean.getDateStr() + " | " + bean.getDeliverHour());
     }
 
     @Override
@@ -358,7 +401,7 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
     public View getInfoWindow(Marker marker) {
         View infoWindow = LayoutInflater.from(getActivity()).inflate(
                 R.layout.custom_info_window_my_location, mapView, false);
-        ((TextView)infoWindow.findViewById(R.id.address)).setText(marker.getSnippet());
+        ((TextView) infoWindow.findViewById(R.id.address)).setText(marker.getSnippet());
         return infoWindow;
     }
 

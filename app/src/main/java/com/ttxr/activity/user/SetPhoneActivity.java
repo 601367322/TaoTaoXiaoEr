@@ -22,7 +22,7 @@ import org.json.JSONObject;
  * Created by Shen on 2015/5/25.
  */
 @OptionsMenu(R.menu.new_address_menu)
-@EActivity(R.layout.activity_set_nickname)
+@EActivity(R.layout.activity_set_phone)
 public class SetPhoneActivity extends BaseBackActivity{
 
     @ViewById
