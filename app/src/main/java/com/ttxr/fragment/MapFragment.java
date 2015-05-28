@@ -34,6 +34,18 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.maps.overlay.WalkRouteOverlay;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.geocoder.GeocodeAddress;
+import com.amap.api.services.geocoder.GeocodeQuery;
+import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeResult;
+import com.amap.api.services.route.BusRouteResult;
+import com.amap.api.services.route.DriveRouteResult;
+import com.amap.api.services.route.RouteSearch;
+import com.amap.api.services.route.WalkPath;
+import com.amap.api.services.route.WalkRouteResult;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.RequestParams;
@@ -43,11 +55,13 @@ import com.ttxr.bean.UserMsg;
 import com.ttxr.bean.request_model.MyOrderRequestDTO;
 import com.ttxr.bean.request_model.MyOrderResponseDTO;
 import com.ttxr.interfaces.IFragmentTitle;
+import com.ttxr.util.AMapUtil;
 import com.ttxr.util.AnimUtil;
 import com.ttxr.util.MyJsonHttpResponseHandler;
 import com.ttxr.util.Url;
 import com.ttxr.util.Util;
 
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.OptionsMenu;
@@ -60,7 +74,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @EFragment(R.layout.activity_fragment)
 @OptionsMenu(R.menu.emoticon_menu)
-public class MapFragment extends BaseFragment implements IFragmentTitle, LocationSource, AMapLocationListener, SensorEventListener, AMap.InfoWindowAdapter {
+public class MapFragment extends BaseFragment implements IFragmentTitle, LocationSource,GeocodeSearch.OnGeocodeSearchListener, AMapLocationListener,RouteSearch.OnRouteSearchListener, SensorEventListener, AMap.InfoWindowAdapter {
 
     @ViewById(R.id.map)
     public MapView mapView;//地图
@@ -80,6 +94,8 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
     TextView time;
     @ViewById
     LinearLayout detail;
+    @ViewById
+    LinearLayout detail_bottom;
     private AMap aMap;
     private OnLocationChangedListener mListener;
     private LocationManagerProxy mAMapLocationManager;
@@ -92,6 +108,12 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
     private static final float zoom = 16;//缩放比例
     private View view;
     private AtomicBoolean toMyPosition = new AtomicBoolean(false);
+    private AMapLocation myLocation;
+    private int busMode = RouteSearch.BusDefault;// 公交默认模式
+    private int drivingMode = RouteSearch.DrivingDefault;// 驾车默认模式
+    private int walkMode = RouteSearch.WalkDefault;// 步行默认模式
+    private GeocodeSearch geocoderSearch; //地理编码
+    private RouteSearch routeSearch;//路径规划
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -100,6 +122,12 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
         mSensorManager = (SensorManager) getActivity()
                 .getSystemService(Context.SENSOR_SERVICE);
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+
+        geocoderSearch = new GeocodeSearch(getActivity());
+        geocoderSearch.setOnGeocodeSearchListener(this);
+
+        routeSearch = new RouteSearch(getActivity());
+        routeSearch.setRouteSearchListener(MapFragment.this);
     }
 
     @Override
@@ -126,30 +154,59 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
 
             @Override
             public void onStart() {
-                message.setVisible(true);
-                message.setActionView(R.layout.actionbar_progress);
+                if (message != null) {
+                    message.setVisible(true);
+                    message.setActionView(R.layout.actionbar_progress);
+                }
             }
 
             @Override
             public void onSuccessRetCode(JSONObject jo) throws Throwable {
-                message.setVisible(true);
+                if (message != null) {
+                    message.setVisible(true);
+                }
                 MyOrderResponseDTO bean = new Gson().fromJson(jo.toString(), new TypeToken<MyOrderResponseDTO>() {
                 }.getType());
                 if (bean != null) {
                     setDetail(bean);
+
+                    GeocodeQuery query = new GeocodeQuery(bean.getPerAddress(), null);
+                    geocoderSearch.getFromLocationNameAsyn(query);// 设置同步地理编码请求
                 }
             }
 
             @Override
             public void onFinish() {
                 super.onFinish();
-                message.setActionView(null);
-                message.setVisible(false);
+                if (message != null) {
+                    message.setActionView(null);
+                    message.setVisible(false);
+                }
             }
         });
     }
 
+    @Background
+    public void searchRoute(LatLonPoint endPoint){
+        while (true){
+            try {
+                if(myLocation !=null) {
+                    LatLonPoint startPoint = new LatLonPoint(myLocation.getLatitude(),myLocation.getLongitude());
+                    final RouteSearch.FromAndTo fromAndTo = new RouteSearch.FromAndTo(
+                            startPoint, endPoint);
+                    RouteSearch.WalkRouteQuery query = new RouteSearch.WalkRouteQuery(fromAndTo, walkMode);
+                    routeSearch.calculateWalkRouteAsyn(query);
+                    break;
+                }
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void setDetail(MyOrderResponseDTO bean) {
+        //上边
         detail.setVisibility(View.VISIBLE);
         detail.measure(0, 0);
         ObjectAnimator.ofFloat(detail, AnimUtil.TRANSLATIONY, -detail.getMeasuredHeight(), 0).setDuration(200).start();
@@ -158,6 +215,11 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
         address.setText(bean.getPerAddress());
         state.setText(bean.getStatusStr());
         time.setText(bean.getDateStr() + " | " + bean.getDeliverHour());
+
+        //下边
+        detail_bottom.setVisibility(View.VISIBLE);
+        detail_bottom.measure(0, 0);
+        ObjectAnimator.ofFloat(detail_bottom, AnimUtil.TRANSLATIONY, detail_bottom.getMeasuredHeight(), 0).setDuration(200).start();
     }
 
     @Override
@@ -196,7 +258,7 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
         aMap.setMyLocationStyle(myLocationStyle);//设置我的位置样式
         aMap.setInfoWindowAdapter(this);
         aMap.setLocationSource(this);//设置监听
-        aMap.getUiSettings().setMyLocationButtonEnabled(true);//显示我的位置按钮
+        aMap.getUiSettings().setZoomControlsEnabled(false);
         aMap.setMyLocationEnabled(true);
         changeCamera(CameraUpdateFactory.zoomTo(zoom), null, false);//缩放
     }
@@ -273,6 +335,9 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
     @Override
     public void onLocationChanged(AMapLocation aLocation) {
         if (mListener != null && aLocation != null) {
+
+            this.myLocation = aLocation;
+
             mListener.onLocationChanged(aLocation);// 显示系统小蓝点
             addMarker(aLocation);
             mGPSMarker.setPosition(new LatLng(aLocation.getLatitude(), aLocation.getLongitude()));
@@ -386,14 +451,15 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
      * 往地图上添加一个Marker覆盖物
      */
     private void addMarker(AMapLocation location) {
-        locationMarker = aMap.addMarker(new MarkerOptions()
-                .anchor(0.5f, 40)
-                .icon(BitmapDescriptorFactory
-                        .fromResource(R.drawable.trans))
-                .position(new LatLng(location.getLatitude(), location.getLongitude()))
-                .snippet(location.getAddress())
-                .title(getString(R.string.im_here)));
-
+        if (locationMarker == null) {
+            locationMarker = aMap.addMarker(new MarkerOptions()
+                    .anchor(0.5f, 40)
+                    .icon(BitmapDescriptorFactory
+                            .fromResource(R.drawable.trans))
+                    .title(getString(R.string.im_here)));
+        }
+        locationMarker.setPosition(new LatLng(location.getLatitude(), location.getLongitude()));
+        locationMarker.setSnippet(location.getAddress());
         locationMarker.showInfoWindow();
     }
 
@@ -415,4 +481,58 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, Locatio
         return R.string.app_name;
     }
 
+
+    //路径规划
+    @Override
+    public void onBusRouteSearched(BusRouteResult busRouteResult, int i) {
+
+    }
+
+    @Override
+    public void onDriveRouteSearched(DriveRouteResult driveRouteResult, int i) {
+
+    }
+
+    @Override
+    public void onWalkRouteSearched(WalkRouteResult result, int rCode) {
+        if(rCode == 0){
+            if(result != null && result.getPaths() != null && result.getPaths().size() > 0){
+                WalkPath walkPath = result.getPaths().get(0);
+
+                aMap.clear();//清理之前的图标
+                WalkRouteOverlay walkRouteOverlay = new WalkRouteOverlay(
+                        getActivity(), aMap, walkPath,result.getStartPos(),
+                        result.getTargetPos());
+                walkRouteOverlay.removeFromMap();
+                walkRouteOverlay.addToMap();
+                walkRouteOverlay.zoomToSpan();
+            }else{
+            }
+        }else{
+        }
+    }
+
+    //地理编码搜索
+    @Override
+    public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
+
+    }
+
+    @Override
+    public void onGeocodeSearched(GeocodeResult result, int rCode) {
+        if (rCode == 0) {
+            if (result != null && result.getGeocodeAddressList() != null
+                    && result.getGeocodeAddressList().size() > 0) {
+                GeocodeAddress address = result.getGeocodeAddressList().get(0);
+                aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                        AMapUtil.convertToLatLng(address.getLatLonPoint()), 15));
+                searchRoute(address
+                        .getLatLonPoint());
+            } else {
+            }
+        } else if (rCode == 27) {
+        } else if (rCode == 32) {
+        } else {
+        }
+    }
 }
