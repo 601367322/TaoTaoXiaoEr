@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by mr.shen on 2015/4/19.
  */
@@ -14,7 +16,6 @@ public abstract class BaseAdapter<E> extends android.widget.BaseAdapter {
 
     public List<E> list;
     public Context context;
-    private ViewGroup parent;
 
     public E getItem(int position) {
         if (list != null && list.size() > 0 && position < list.size()) {
@@ -32,7 +33,7 @@ public abstract class BaseAdapter<E> extends android.widget.BaseAdapter {
         return list;
     }
 
-    public void add(List<E> list){
+    public void add(List<E> list) {
         this.list.addAll(list);
         notifyDataSetChanged();
     }
@@ -53,11 +54,31 @@ public abstract class BaseAdapter<E> extends android.widget.BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        this.parent = parent;
-        return null;
+        BaseHolder holder = null;
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(getConvertView(), parent, false);
+            holder = getHolder(convertView);
+        } else {
+            holder = (BaseHolder) convertView.getTag();
+        }
+        holder.bind(getItem(position));
+        return convertView;
     }
 
-    public View getConvertView(int layoutRes) {
-        return LayoutInflater.from(context).inflate(layoutRes, parent, false);
+    public abstract BaseHolder getHolder(View view);
+
+    public abstract int getConvertView();
+
+    public abstract class BaseHolder {
+
+        public BaseHolder(View view) {
+
+            ButterKnife.bind(this, view);
+
+            view.setTag(this);
+        }
+
+        public abstract void bind(E bean);
     }
+
 }

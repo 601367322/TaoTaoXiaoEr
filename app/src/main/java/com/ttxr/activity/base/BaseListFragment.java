@@ -6,12 +6,16 @@ import android.view.ViewGroup;
 
 import com.ttxr.activity.R;
 import com.ttxr.interfaces.IFragmentTitle;
+import com.ttxr.util.MyJsonHttpResponseHandler;
+import com.ttxr.util.Util;
 import com.ttxr.weight.listview.XListView;
 import com.ttxr.weight.swipe.SwipeRefreshLayout;
 
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -52,8 +56,37 @@ public abstract class BaseListFragment<T> extends BaseFragment implements IFragm
     }
 
     @Override
+    public void onRefresh() {
+        currentPage = 0;
+        onPullToRefresh();
+    }
+
+    @Override
     public void onLoadMore() {
-        onRefresh();
+        onPullToRefresh();
+    }
+
+    private void onPullToRefresh() {
+        final BaseApi api = getApi();
+        if(pageEnable()) {
+            api.setPageRequest(currentPage, pageSize);
+        }
+        ac.httpClient.post(api.getUrl(), api.getParams(), new MyJsonHttpResponseHandler(getActivity()) {
+            @Override
+            public void onSuccessRetCode(JSONObject jo) throws Throwable {
+                totalPage = Util.getTotalPages(jo);
+                onSuccessCallBack(jo);
+
+                List list = Util.jsonToList(jo.optString(getJSONObjectListKey()), getClazz());
+                onSuccessRefreshUI(list);
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                onFinshRefreshUI();
+            }
+        });
     }
 
     @UiThread
@@ -67,7 +100,7 @@ public abstract class BaseListFragment<T> extends BaseFragment implements IFragm
 
     public abstract BaseAdapter<T> getAdapter();
 
-    public void onSuccessRefreshUI(List list) {
+    private void onSuccessRefreshUI(List list) {
         if (list != null) {
             adapter.setList(list);
             adapter.notifyDataSetChanged();
@@ -80,8 +113,26 @@ public abstract class BaseListFragment<T> extends BaseFragment implements IFragm
         }
     }
 
-    public void onFinshRefreshUI() {
+    private void onFinshRefreshUI() {
         refreshLayout.setRefreshing(false);
         listview.stop();
+    }
+
+    @ItemClick
+    public void listview(int position) {
+
+    }
+
+    public abstract BaseApi getApi();
+
+    public void onSuccessCallBack(JSONObject jo) {
+    }
+
+    public abstract String getJSONObjectListKey();
+
+    public abstract Class<?> getClazz();
+
+    public boolean pageEnable(){
+        return true;
     }
 }

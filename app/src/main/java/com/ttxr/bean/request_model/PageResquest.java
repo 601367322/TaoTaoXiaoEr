@@ -38,4 +38,11 @@ public class PageResquest {
 		this.pageSize = pageSize;
 	}
 
+	public PageResquest() {
+	}
+
+	public PageResquest(Integer curPage, Integer pageSize) {
+		this.curPage = curPage;
+		this.pageSize = pageSize;
+	}
 }

@@ -28,5 +28,11 @@ public class Url {
     public static String GET_ORDER_REQUEST = HOST + "appservice/appOrder/getMyOrderRequest";
     //获取订单信息
     public static String GET_MY_ORDER = HOST + "appservice/appOrder/getMyAppOrder";
+    //改变订单状态
+    public static String CHANGE_ORDER_STATUS = HOST + "appservice/appOrder/sendAppOrder";
+    //获取接单记录
+    public static String GET_MY_ORDER_LIST = HOST + "appservice/appOrder/getMyOrderList";
+    //获取订单状态
+    public static String GET_ORDER_STATUS = HOST + "appservice/appOrder/getOrderStatus";
 
 }

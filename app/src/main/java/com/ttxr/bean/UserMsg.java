@@ -11,7 +11,7 @@ public class UserMsg implements Serializable {
 	private String msgTitle;    //消息标题
 	private String msgContent;  //消息内容
 	private String orderId;     //和该消息相关的订单id
-	private String status;      //消息状态  0为未读、1为已读、2为删除
+	private String orderStatus;      //消息状态  0为未读、1为已读、2为删除
 	private String dateStr;
 	private String updateDate;
 	public String getMsgId() {
@@ -62,12 +62,15 @@ public class UserMsg implements Serializable {
 	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
-	public String getStatus() {
-		return status;
+
+	public String getOrderStatus() {
+		return orderStatus;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
 	}
+
 	public String getUpdateDate() {
 		return updateDate;
 	}
@@ -81,5 +84,10 @@ public class UserMsg implements Serializable {
 
 	public void setDateStr(String dateStr) {
 		this.dateStr = dateStr;
+	}
+
+	public UserMsg(String orderId, String orderStatus) {
+		this.orderId = orderId;
+		this.orderStatus = orderStatus;
 	}
 }

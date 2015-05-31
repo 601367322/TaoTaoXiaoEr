@@ -2,12 +2,10 @@ package com.ttxr.adapter;
 
 import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseAdapter;
-import com.ttxr.activity.base.BaseHolder;
 import com.ttxr.bean.UserMsg;
 
 import butterknife.FindView;
@@ -22,25 +20,6 @@ public class MessageAdapter extends BaseAdapter<UserMsg> {
         super(context);
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        super.getView(position, convertView, parent);
-        ViewHolder holder = null;
-        if (convertView == null) {
-            convertView = getConvertView(R.layout.message_fragment_list_item);
-            holder = new ViewHolder(convertView);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-        UserMsg msg = getItem(position);
-        if (msg != null) {
-            holder.text.setText(msg.getMsgContent());
-            holder.time.setText(msg.getDateStr());
-            holder.title.setText(msg.getMsgTitle());
-        }
-        return convertView;
-    }
-
     class ViewHolder extends BaseHolder {
 
         @FindView(R.id.time)
@@ -53,5 +32,24 @@ public class MessageAdapter extends BaseAdapter<UserMsg> {
         public ViewHolder(View view) {
             super(view);
         }
+
+        @Override
+        public void bind(UserMsg bean) {
+            if (bean != null) {
+                text.setText(bean.getMsgContent());
+                time.setText(bean.getDateStr());
+                title.setText(bean.getMsgTitle());
+            }
+        }
+    }
+
+    @Override
+    public BaseHolder getHolder(View view) {
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public int getConvertView() {
+        return R.layout.message_fragment_list_item;
     }
 }

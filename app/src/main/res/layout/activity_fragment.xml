@@ -130,10 +130,10 @@
     <LinearLayout
         android:id="@+id/detail_bottom"
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:orientation="vertical">
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="match_parent"
@@ -143,32 +143,34 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="14dp"
-            android:gravity="center_vertical"
             android:background="@color/white"
-            android:orientation="horizontal">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="14dp">
 
             <ImageView
-                android:clickable="true"
+                android:id="@+id/call_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:src="@drawable/call_phone_btn"/>
 
             <Button
-                android:layout_marginLeft="15dp"
+                android:id="@+id/status_btn"
                 android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:text="订单完成"
-                android:textColor="@color/actionbar"
-                android:textSize="24sp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/status_event_btn"/>
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/status_event_btn"
+                android:textColor="@color/actionbar"
+                android:textSize="24sp"/>
 
             <ImageView
-                android:clickable="true"
+                android:id="@+id/position_btn"
                 android:layout_width="wrap_content"
-                android:layout_marginLeft="15dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:clickable="true"
                 android:src="@drawable/my_position_btn"/>
         </LinearLayout>
     </LinearLayout>

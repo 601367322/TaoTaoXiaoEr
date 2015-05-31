@@ -11,6 +11,7 @@ package com.ttxr.weight.listview;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
+import android.support.v7.internal.widget.ListViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,7 +20,6 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
 
@@ -27,7 +27,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.ttxr.activity.R;
 
-public class XListView extends ListView implements OnScrollListener {
+public class XListView extends ListViewCompat implements OnScrollListener {
 
     private float mLastY = -1; // save event y
     private Scroller mScroller; // used for scroll back

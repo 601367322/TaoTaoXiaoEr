@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.ttxr.activity"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest
+    package="com.ttxr.activity"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -15,7 +16,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
         android:name="com.ttxr.application.AppClass_"
@@ -25,9 +26,9 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity_"
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
 
         </activity>
 
@@ -38,39 +39,49 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".user.RegActivity_"
-            android:label="@string/fast_reg"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/fast_reg"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".user.SetPassWordActivity_"
-            android:label="@string/fast_reg"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/fast_reg"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".user.LoginActivity_"
-            android:label="@string/login"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/login"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".user.SetAddressActivity_"
-            android:label="@string/new_address"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/new_address"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".user.SetPhoneActivity_"
-            android:label="@string/phone"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/phone"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".user.SetNickNameActivity_"
-            android:label="更改昵称"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/reset_nickname"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".user.SetPhotoActivity_"
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/setphoto"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/setphoto"/>
+        <activity
+            android:name=".order.OrderDetailActivity_"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/order_status"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".setting.IPSettingActivity_"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="设置IP"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".WelcomeActivity_"
@@ -88,10 +99,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/viewpager"></activity>
 
-        <!-- 高德地图 -->
+        <!-- 高德地图 debug-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="e4574d789fdff3326b0b2021bf0edc9d"/>
+            android:value="d449ae54c3fb03554b1d6a68368ed23b"/>
+        <!-- 高德地图 线上-->
 
         <!-- umeng 推送 -->
         <receiver

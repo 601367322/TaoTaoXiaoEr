@@ -8,6 +8,8 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.ttxr.activity.LoginAndRegActivity_;
 import com.ttxr.activity.R;
 import com.ttxr.application.AM;
+import com.ttxr.bean.UserBeanTable;
+import com.ttxr.db.DBHelper;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -44,7 +46,7 @@ public abstract class MyJsonHttpResponseHandler extends JsonHttpResponseHandler 
     public void onStart() {
         if (progress != null && context != null) {
             dialog = Util.progress(context, progress);
-            if(listener!=null){
+            if (listener != null) {
                 dialog.setOnCancelListener(listener);
             }
         }
@@ -70,6 +72,7 @@ public abstract class MyJsonHttpResponseHandler extends JsonHttpResponseHandler 
             case 401:
                 if (context != null) {
                     Util.toast(context, context.getString(R.string.unlogin));
+                    DBHelper.clearTable(context, UserBeanTable.class);
                     AM.getActivityManager().popAllActivity();
                     LoginAndRegActivity_.intent(context).start();
                 }
