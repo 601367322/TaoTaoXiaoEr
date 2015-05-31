@@ -37,8 +37,8 @@ public class LoginAndRegActivity extends BaseActivity {
 
     @Click
     public void setting_ip(){
-        if(BuildConfig.DEBUG){
+//        if(BuildConfig.DEBUG){
             IPSettingActivity_.intent(this).start();
-        }
+//        }
     }
 }
