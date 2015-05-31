@@ -100,11 +100,13 @@
             android:theme="@style/viewpager"></activity>
 
         <!-- 高德地图 debug-->
+        <!--<meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="e4574d789fdff3326b0b2021bf0edc9d"/>-->
+        <!-- 高德地图 线上-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="d449ae54c3fb03554b1d6a68368ed23b"/>
-        <!-- 高德地图 线上-->
-
         <!-- umeng 推送 -->
         <receiver
             android:name="com.umeng.message.NotificationProxyBroadcastReceiver"

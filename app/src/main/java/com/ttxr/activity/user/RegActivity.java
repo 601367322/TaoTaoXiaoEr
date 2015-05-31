@@ -6,12 +6,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.ttxr.activity.LoginAndRegActivity_;
 import com.ttxr.activity.MainActivity_;
 import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseBackActivity;
 import com.ttxr.application.AM;
+import com.ttxr.bean.UserBean;
+import com.ttxr.bean.UserBeanTable;
 import com.ttxr.bean.request_model.RegisterRequestDTO;
+import com.ttxr.db.DBHelper;
 import com.ttxr.location.GDLocation;
 import com.ttxr.util.MD5andKL;
 import com.ttxr.util.MyJsonHttpResponseHandler;
@@ -73,6 +78,14 @@ public class RegActivity extends BaseBackActivity {
             @Override
             public void onSuccessRetCode(JSONObject jo) throws Throwable {
                 Util.toast(context, jo.optString(Url.RET_MESSAGE));
+                if (jo.has("user")) {
+                    UserBean user = new Gson().fromJson(jo.optString("user"), new TypeToken<UserBean>() {
+                    }.getType());
+                    if (user != null) {
+                        UserBeanTable table = new UserBeanTable(user);
+                        DBHelper.getUserDao(RegActivity.this).createOrUpdate(table);
+                    }
+                }
                 AM.getActivityManager().popActivity(LoginActivity_.class);
                 AM.getActivityManager().popActivity(LoginAndRegActivity_.class);
                 finish();
