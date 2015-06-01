@@ -2,8 +2,14 @@ package com.ttxr.util;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.ttxr.activity.LoginAndRegActivity_;
+import com.ttxr.activity.R;
+import com.ttxr.application.AM;
+import com.ttxr.bean.UserBeanTable;
+import com.ttxr.db.DBHelper;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -17,6 +23,7 @@ public abstract class MyJsonHttpResponseHandler extends JsonHttpResponseHandler 
     String progress = null;
     Context context = null;
     ProgressDialog dialog = null;
+    DialogInterface.OnCancelListener listener;
 
     public MyJsonHttpResponseHandler(Context context) {
         this(context, null);
@@ -28,10 +35,20 @@ public abstract class MyJsonHttpResponseHandler extends JsonHttpResponseHandler 
         setCharset("GBK");
     }
 
+    public MyJsonHttpResponseHandler(Context context, String progress, DialogInterface.OnCancelListener listener) {
+        this.context = context;
+        this.progress = progress;
+        this.listener = listener;
+        setCharset("GBK");
+    }
+
     @Override
     public void onStart() {
         if (progress != null && context != null) {
             dialog = Util.progress(context, progress);
+            if (listener != null) {
+                dialog.setOnCancelListener(listener);
+            }
         }
     }
 
@@ -51,7 +68,19 @@ public abstract class MyJsonHttpResponseHandler extends JsonHttpResponseHandler 
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         super.onFailure(statusCode, headers, throwable, errorResponse);
-        onFailure();
+        switch (statusCode) {
+            case 401:
+                if (context != null) {
+                    Util.toast(context, context.getString(R.string.unlogin));
+                    DBHelper.clearTable(context, UserBeanTable.class);
+                    AM.getActivityManager().popAllActivity();
+                    LoginAndRegActivity_.intent(context).start();
+                }
+                break;
+            default:
+                onFailure();
+                break;
+        }
     }
 
     @Override
@@ -71,6 +100,9 @@ public abstract class MyJsonHttpResponseHandler extends JsonHttpResponseHandler 
                     case 1:
                         onFailRetCode(jo);
                         break;
+                    case 2:
+                        onFailRetCode(jo);
+                        break;
                 }
             }
         } catch (Throwable e) {
@@ -82,7 +114,7 @@ public abstract class MyJsonHttpResponseHandler extends JsonHttpResponseHandler 
     public abstract void onSuccessRetCode(JSONObject jo) throws Throwable;
 
     public void onFailRetCode(JSONObject jo) {
-        if (jo.has(Url.RET_MESSAGE)) {
+        if (jo.has(Url.RET_MESSAGE) && context != null) {
             Util.toast(context, jo.optString(Url.RET_MESSAGE));
         }
     }

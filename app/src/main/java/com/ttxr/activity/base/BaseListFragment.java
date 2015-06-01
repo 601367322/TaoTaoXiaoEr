@@ -6,12 +6,18 @@ import android.view.ViewGroup;
 
 import com.ttxr.activity.R;
 import com.ttxr.interfaces.IFragmentTitle;
+import com.ttxr.util.MyJsonHttpResponseHandler;
+import com.ttxr.util.Util;
 import com.ttxr.weight.listview.XListView;
 import com.ttxr.weight.swipe.SwipeRefreshLayout;
 
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by sbb on 2015/5/14.
@@ -28,7 +34,9 @@ public abstract class BaseListFragment<T> extends BaseFragment implements IFragm
 
     public View emptyView;
 
-    public int page = 0;
+    public int currentPage = 0;
+    public int totalPage = 1;
+    public int pageSize = 10;
 
     @Override
     public void afterViews() {
@@ -47,6 +55,40 @@ public abstract class BaseListFragment<T> extends BaseFragment implements IFragm
         refresh();
     }
 
+    @Override
+    public void onRefresh() {
+        currentPage = 0;
+        onPullToRefresh();
+    }
+
+    @Override
+    public void onLoadMore() {
+        onPullToRefresh();
+    }
+
+    private void onPullToRefresh() {
+        final BaseApi api = getApi();
+        if(pageEnable()) {
+            api.setPageRequest(currentPage, pageSize);
+        }
+        ac.httpClient.post(api.getUrl(), api.getParams(), new MyJsonHttpResponseHandler(getActivity()) {
+            @Override
+            public void onSuccessRetCode(JSONObject jo) throws Throwable {
+                totalPage = Util.getTotalPages(jo);
+                onSuccessCallBack(jo);
+
+                List list = Util.jsonToList(jo.optString(getJSONObjectListKey()), getClazz());
+                onSuccessRefreshUI(list);
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                onFinshRefreshUI();
+            }
+        });
+    }
+
     @UiThread
     public void refresh() {
         refreshLayout.setRefreshing(true);
@@ -58,4 +100,39 @@ public abstract class BaseListFragment<T> extends BaseFragment implements IFragm
 
     public abstract BaseAdapter<T> getAdapter();
 
+    private void onSuccessRefreshUI(List list) {
+        if (list != null) {
+            adapter.setList(list);
+            adapter.notifyDataSetChanged();
+            currentPage++;
+        }
+        if (currentPage >= totalPage) {
+            listview.setPage(-1);
+        } else {
+            listview.setPage(currentPage);
+        }
+    }
+
+    private void onFinshRefreshUI() {
+        refreshLayout.setRefreshing(false);
+        listview.stop();
+    }
+
+    @ItemClick
+    public void listview(int position) {
+
+    }
+
+    public abstract BaseApi getApi();
+
+    public void onSuccessCallBack(JSONObject jo) {
+    }
+
+    public abstract String getJSONObjectListKey();
+
+    public abstract Class<?> getClazz();
+
+    public boolean pageEnable(){
+        return true;
+    }
 }

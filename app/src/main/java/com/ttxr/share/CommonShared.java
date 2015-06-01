@@ -2,6 +2,8 @@ package com.ttxr.share;
 
 import android.content.Context;
 
+import com.ttxr.util.Url;
+
 public class CommonShared {
     private SharedDataUtil sp;
     private SharedDataUtil.SharedDataEditor editor;
@@ -13,6 +15,9 @@ public class CommonShared {
     private final String PUSH_SWITCH = "push_switch";
     private final String LAT = "lat";
     private final String LNG = "lng";
+
+
+    private final String URL = "url";
 
     public CommonShared(Context context) {
         sp = SharedDataUtil.getInstance(context);
@@ -55,5 +60,12 @@ public class CommonShared {
         editor.commit();
     }
 
+    public String getUrl() {
+        return sp.getString(URL, Url.HOST);
+    }
 
+    public void setUrl(String str) {
+        editor.putString(URL, str);
+        editor.commit();
+    }
 }

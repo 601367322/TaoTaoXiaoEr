@@ -1,9 +1,7 @@
 package com.ttxr.adapter;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,7 +9,6 @@ import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseAdapter;
 import com.ttxr.bean.MenuBean;
 
-import butterknife.ButterKnife;
 import butterknife.FindView;
 
 /**
@@ -23,28 +20,7 @@ public class MenuAdapter extends BaseAdapter<MenuBean> {
         super(context);
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.fragment_left_menu_list_item, parent, false);
-            holder = new ViewHolder(convertView);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-        MenuBean bean = getItem(position);
-        holder.icon.setImageResource(bean.icon);
-        holder.title.setText(bean.title);
-        if (bean.badge) {
-            holder.badge.setVisibility(View.VISIBLE);
-        } else {
-            holder.badge.setVisibility(View.GONE);
-        }
-        return convertView;
-    }
-
-    class ViewHolder {
+    class ViewHolder extends BaseHolder{
 
         @FindView(R.id.icon)
         ImageView icon;
@@ -54,7 +30,28 @@ public class MenuAdapter extends BaseAdapter<MenuBean> {
         TextView title;
 
         public ViewHolder(View view) {
-            ButterKnife.bind(this, view);
+            super(view);
         }
+
+        @Override
+        public void bind(MenuBean bean) {
+            icon.setImageResource(bean.icon);
+            title.setText(bean.title);
+            if (bean.badge) {
+                badge.setVisibility(View.VISIBLE);
+            } else {
+                badge.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    @Override
+    public BaseHolder getHolder(View view) {
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public int getConvertView() {
+        return R.layout.fragment_left_menu_list_item;
     }
 }

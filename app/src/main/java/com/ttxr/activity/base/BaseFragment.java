@@ -1,5 +1,6 @@
 package com.ttxr.activity.base;
 
+import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
@@ -18,6 +19,8 @@ public abstract class BaseFragment extends Fragment {
     @App
     public AppClass ac;
 
+    public Activity activity;
+
     @AfterViews
     public void afterViews() {
         if (getActivity() == null) {
@@ -32,5 +35,11 @@ public abstract class BaseFragment extends Fragment {
             toast = Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT);
             toast.show();
         }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.activity = activity;
     }
 }

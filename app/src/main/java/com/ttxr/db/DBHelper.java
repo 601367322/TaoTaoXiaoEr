@@ -10,7 +10,9 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import com.ttxr.bean.UserBean;
+import com.ttxr.bean.UserBeanTable;
+import com.umeng.message.proguard.D;
+import com.umeng.message.proguard.T;
 
 public class DBHelper extends OrmLiteSqliteOpenHelper {
     private static final String TAG = "DBHelper";
@@ -37,7 +39,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase,
                          ConnectionSource connectionSource) {
         try {
-            TableUtils.createTable(connectionSource, UserBean.class);
+            TableUtils.createTable(connectionSource, UserBeanTable.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -47,7 +49,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase,
                           ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
-            TableUtils.dropTable(connectionSource, UserBean.class, false);
+            TableUtils.dropTable(connectionSource, UserBeanTable.class, false);
             onCreate(sqLiteDatabase, connectionSource);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,4 +68,16 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
         return OpenHelperManager.getHelper(context, DBHelper.class).getRuntimeExceptionDao(clazz);
     }
 
+    public static RuntimeExceptionDao getUserDao(Context context) {
+        return OpenHelperManager.getHelper(context, DBHelper.class).getRuntimeExceptionDao(UserBeanTable.class);
+    }
+
+    public static void clearTable(Context context, Class clazz) {
+        try {
+            ConnectionSource source = OpenHelperManager.getHelper(context, DBHelper.class).getConnectionSource();
+            TableUtils.clearTable(source, clazz);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

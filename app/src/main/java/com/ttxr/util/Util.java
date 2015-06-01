@@ -8,9 +8,18 @@ import android.os.Environment;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.loopj.android.http.RequestParams;
 import com.ttxr.activity.R;
+import com.ttxr.bean.UserBeanTable;
+import com.ttxr.db.DBHelper;
 
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -92,6 +101,22 @@ public class Util {
         return new RequestParams(Url.REQUEST_DATA, new Gson().toJson(params).toString());
     }
 
+    public static RequestParams getTokenRequestParams(Context context, Object params) {
+        try {
+            RuntimeExceptionDao<UserBeanTable, Integer> userDao = DBHelper.getUserDao(context.getApplicationContext());
+            UserBeanTable bean = userDao.queryForFirst(userDao.queryBuilder().prepare());
+            RequestParams request = new RequestParams();
+            if (params != null) {
+                request.put(Url.REQUEST_DATA, new Gson().toJson(params).toString());
+            }
+            request.put("token", bean.bean.token);
+            return request;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     // 判断手机有无存储卡
     public static boolean existSDcard() {
         if (Environment.MEDIA_MOUNTED.equals(Environment
@@ -107,5 +132,39 @@ public class Util {
         } else {
             return false;
         }
+    }
+
+    public static int getTotalPages(JSONObject jo) {
+        if (jo != null) {
+            if (jo.has("page")) {
+                JSONObject page = jo.optJSONObject("page");
+                if (page.has("totalPages")) {
+                    return page.optInt("totalPages");
+                }
+            }
+        }
+        return 1;
+    }
+
+    public static <T> ArrayList<T> jsonToList(String json, Class<T> classOfT) {
+        Type type = new TypeToken<ArrayList<JsonObject>>(){}.getType();
+        ArrayList<JsonObject> jsonObjs = new Gson().fromJson(json, type);
+
+        ArrayList<T> listOfT = new ArrayList<>();
+        for (JsonObject jsonObj : jsonObjs) {
+            listOfT.add(new Gson().fromJson(jsonObj, classOfT));
+        }
+
+        return listOfT;
+    }
+
+    public static int px2dip(Context context, float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
+
+    public static int dip2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
     }
 }

@@ -17,4 +17,6 @@
 
     <color name="edit_color">#838383</color>
     <color name="c333333">#333333</color>
+    <color name="cf0f0f0">#f0f0f0</color>
+    <color name="cf5f5f5">#f5f5f5</color>
 </resources>

@@ -1,28 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/activity_bg">
 
-    <com.ttxr.weight.swipe.SwipeRefreshLayout
-        android:id="@+id/refresh_layout"
+<com.ttxr.weight.swipe.SwipeRefreshLayout
+    android:id="@+id/refresh_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.ttxr.weight.listview.XListView
+        android:id="@+id/listview"
+        style="@style/Widget.AppCompat.ListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/all_tab">
+        android:cacheColorHint="@color/transparent"
+        android:divider="@color/cf5f5f5"
+        android:dividerHeight="1dp"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false">
 
-        <com.ttxr.weight.listview.XListView
-            android:id="@+id/listview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:cacheColorHint="@color/transparent"
-            android:divider="@null"
-            android:dividerHeight="0dp"
-            android:fadingEdge="none"
-            android:focusable="false"
-            android:listSelector="@color/transparent"
-            android:orientation="vertical">
-
-        </com.ttxr.weight.listview.XListView>
-    </com.ttxr.weight.swipe.SwipeRefreshLayout>
-
-</RelativeLayout>
+    </com.ttxr.weight.listview.XListView>
+</com.ttxr.weight.swipe.SwipeRefreshLayout>

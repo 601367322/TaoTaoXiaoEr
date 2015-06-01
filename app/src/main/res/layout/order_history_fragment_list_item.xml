@@ -3,7 +3,6 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:padding="16dp"
-    android:background="@drawable/default_list_item"
     android:layout_height="wrap_content">
 
     <ImageView
@@ -18,8 +17,8 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/name"
             android:layout_width="wrap_content"
-            android:text="圣地亚哥"
             android:textSize="18dp"
             android:singleLine="true"
             android:ellipsize="end"
@@ -40,8 +39,8 @@
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:id="@+id/price"
                 android:layout_width="wrap_content"
-                android:text="￥4"
                 android:textSize="@dimen/setting_title_size"
                 android:textColor="#fb7765"
                 android:layout_height="wrap_content" />
@@ -56,31 +55,31 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:text="送往: "
-                android:textSize="13sp"
+                android:textSize="@dimen/setting_title_size"
                 android:textColor="@color/setting_title"
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:singleLine="true"
                 android:ellipsize="end"
-                android:text="圣地亚12空间阿里山的法律渴望 刷卡地方阿三地方"
-                android:textSize="13sp"
+                android:textSize="@dimen/setting_title_size"
                 android:textColor="@color/setting_title"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
         <TextView
+            android:id="@+id/time"
             android:layout_width="wrap_content"
-            android:text="2015/01/12 14:20 | 30分钟到达"
             android:layout_marginTop="6dp"
-            android:textSize="13sp"
+            android:textSize="@dimen/setting_title_size"
             android:textColor="@color/setting_title"
             android:layout_height="wrap_content" />
 
         <TextView
+            android:id="@+id/status"
             android:layout_width="wrap_content"
-            android:text="已完成"
             android:layout_marginTop="6dp"
             android:textSize="16sp"
             android:textColor="@color/setting_title"

@@ -3,10 +3,17 @@ package com.ttxr.fragment;
 import android.support.v7.widget.SwitchCompat;
 import android.widget.TextView;
 
+import com.ttxr.activity.LoginAndRegActivity_;
+import com.ttxr.activity.MainActivity_;
 import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseFragment;
+import com.ttxr.application.AM;
+import com.ttxr.bean.UserBeanTable;
+import com.ttxr.db.DBHelper;
 import com.ttxr.interfaces.IFragmentTitle;
 import com.ttxr.share.CommonShared;
+import com.ttxr.util.MyJsonHttpResponseHandler;
+import com.ttxr.util.Url;
 import com.ttxr.util.Util;
 import com.umeng.fb.FeedbackAgent;
 import com.umeng.message.PushAgent;
@@ -18,6 +25,7 @@ import org.androidannotations.annotations.CheckedChange;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONObject;
 
 /**
  * Created by mr.shen on 2015/4/25.
@@ -80,4 +88,16 @@ public class SettingFragment extends BaseFragment implements IFragmentTitle {
         }
     }
 
+    @Click
+    public void exit(){
+        ac.httpClient.post(Url.EXIT, null, new MyJsonHttpResponseHandler(getActivity()) {
+            @Override
+            public void onSuccessRetCode(JSONObject jo) throws Throwable {
+
+            }
+        });
+        DBHelper.clearTable(getActivity(),UserBeanTable.class);
+        AM.getActivityManager().popActivity(MainActivity_.class);
+        LoginAndRegActivity_.intent(getActivity()).start();
+    }
 }

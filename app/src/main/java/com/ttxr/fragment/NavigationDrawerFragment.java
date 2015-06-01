@@ -11,20 +11,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.j256.ormlite.dao.RuntimeExceptionDao;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseFragment;
 import com.ttxr.adapter.MenuAdapter;
 import com.ttxr.bean.MenuBean;
-import com.ttxr.bean.UserBean;
+import com.ttxr.bean.UserBeanTable;
 import com.ttxr.db.DBHelper;
+import com.ttxr.util.ImageUtil;
 import com.ttxr.weight.CircleImageView;
 
 import org.androidannotations.annotations.Click;
@@ -32,7 +33,6 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.ViewById;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class NavigationDrawerFragment extends BaseFragment {
     ListView listView;
     MenuAdapter adapter;
 
-    RuntimeExceptionDao<UserBean, Integer> userDao;
+    RuntimeExceptionDao<UserBeanTable, Integer> userDao;
     @ViewById
     CircleImageView logo;
     @ViewById
@@ -52,13 +52,10 @@ public class NavigationDrawerFragment extends BaseFragment {
     @ViewById
     TextView phone;
 
-    public static final DisplayImageOptions options_no_default = new DisplayImageOptions.Builder()
-            .cacheInMemory(true).cacheOnDisk(true).showImageForEmptyUri(R.drawable.default_logo).showImageOnFail(R.drawable.default_logo).showImageOnLoading(R.drawable.default_logo).build();
-
     @Override
     public void afterViews() {
         super.afterViews();
-        userDao = DBHelper.getDao_(getActivity(), UserBean.class);
+        userDao = DBHelper.getDao_(getActivity(), UserBeanTable.class);
         List<MenuBean> list = new ArrayList<>();
         list.add(new MenuBean(R.drawable.menu_icon1, getActivity().getString(R.string.my_order), false));
         list.add(new MenuBean(R.drawable.menu_icon2, getActivity().getString(R.string.order_history), false));
@@ -74,10 +71,14 @@ public class NavigationDrawerFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         try {
-            UserBean bean = userDao.queryForFirst(userDao.queryBuilder().prepare());
-            ImageLoader.getInstance().displayImage(bean.getPhotoUrl(),logo);
-            name.setText(bean.getNickName());
-            phone.setText(bean.getUserPhone());
+            UserBeanTable bean = userDao.queryForFirst(userDao.queryBuilder().prepare());
+            ImageLoader.getInstance().displayImage(bean.bean.photoUrl, logo, ImageUtil.options_default);
+            if(TextUtils.isEmpty(bean.bean.nickName)){
+                name.setText(getString(R.string.app_name));
+            }else {
+                name.setText(bean.bean.nickName);
+            }
+            phone.setText(bean.bean.userAccount);
         } catch (Exception e) {
             e.printStackTrace();
         }

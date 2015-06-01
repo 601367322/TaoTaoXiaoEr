@@ -13,11 +13,10 @@
         android:background="@drawable/login_edit_text_top_bg"
         android:textSize="@dimen/setting_title_size"
         android:gravity="center_vertical"
-        android:inputType="phone"
-        android:hint="@string/user_phone"
+        android:hint="@string/username"
         android:layout_marginTop="16dp"
-        android:text="13488616135"
         android:paddingLeft="16dp"
+        android:maxLength="30"
         android:paddingRight="16dp"
         android:textColor="@color/setting_title"
         android:layout_height="45dp" />
@@ -31,13 +30,13 @@
         android:inputType="textPassword"
         android:hint="@string/password"
         android:paddingLeft="16dp"
-        android:text="123456"
         android:paddingRight="16dp"
         android:textColor="@color/setting_title"
         android:layout_height="45dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content">
 
         <TextView
@@ -54,6 +53,7 @@
             android:layout_width="wrap_content"
             android:gravity="center_vertical"
             android:text="@string/find_password"
+            android:visibility="gone"
             android:textSize="@dimen/setting_title_size"
             android:textColor="@color/c333333"
             android:layout_height="40dp" />

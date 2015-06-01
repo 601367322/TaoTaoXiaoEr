@@ -6,6 +6,7 @@
     tools:context=".MainActivity">
 
     <FrameLayout
+        android:background="@color/activity_bg"
         android:id="@+id/content"
         android:layout_below="@id/action_bar"
         android:layout_width="match_parent"

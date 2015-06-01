@@ -3,6 +3,7 @@ package com.ttxr.activity;
 import android.os.Bundle;
 
 import com.ttxr.activity.base.BaseActivity;
+import com.ttxr.activity.setting.IPSettingActivity_;
 import com.ttxr.activity.user.LoginActivity_;
 import com.ttxr.activity.user.RegActivity_;
 import com.ttxr.location.GDLocation;
@@ -32,5 +33,12 @@ public class LoginAndRegActivity extends BaseActivity {
     @Click
     public void toReg(){
         RegActivity_.intent(this).start();
+    }
+
+    @Click
+    public void setting_ip(){
+        if(BuildConfig.DEBUG){
+            IPSettingActivity_.intent(this).start();
+        }
     }
 }

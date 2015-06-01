@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ttxr.activity">
+<manifest
+    package="com.ttxr.activity"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
         android:name="com.ttxr.application.AppClass_"
@@ -25,28 +26,61 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity_"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
 
         </activity>
 
         <!-- 登录注册选择界面 -->
-        <activity android:name=".LoginAndRegActivity_"
+        <activity
+            android:name=".LoginAndRegActivity_"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".user.RegActivity_"
+        <activity
+            android:name=".user.RegActivity_"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/fast_reg"
             android:screenOrientation="portrait"/>
-        <activity android:name=".user.SetPassWordActivity_"
+        <activity
+            android:name=".user.SetPassWordActivity_"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/fast_reg"
             android:screenOrientation="portrait"/>
-        <activity android:name=".user.LoginActivity_"
+        <activity
+            android:name=".user.LoginActivity_"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/login"
             android:screenOrientation="portrait"/>
-        <activity android:name=".user.NewAddressActivity_"
+        <activity
+            android:name=".user.SetAddressActivity_"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/new_address"
             android:screenOrientation="portrait"/>
-        <activity android:name=".user.SetNickNameActivity_"
-            android:label="更改昵称"
+        <activity
+            android:name=".user.SetPhoneActivity_"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/phone"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".user.SetNickNameActivity_"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/reset_nickname"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".user.SetPhotoActivity_"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/setphoto"/>
+        <activity
+            android:name=".order.OrderDetailActivity_"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/order_status"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".setting.IPSettingActivity_"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="设置IP"
             android:screenOrientation="portrait"/>
 
         <activity
@@ -54,9 +88,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/welcome">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
@@ -65,10 +99,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/viewpager"></activity>
 
-        <!-- 高德地图 -->
+        <!-- 高德地图 debug-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="e4574d789fdff3326b0b2021bf0edc9d" />
+            android:value="d449ae54c3fb03554b1d6a68368ed23b"/>
+        <!-- 高德地图 线上-->
 
         <!-- umeng 推送 -->
         <receiver
@@ -79,41 +114,41 @@
             android:name="com.umeng.message.SystemReceiver"
             android:process=":push">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-                <data android:scheme="package" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <data android:scheme="package"/>
             </intent-filter>
         </receiver>
         <receiver
             android:name="com.umeng.message.MessageReceiver"
             android:process=":push">
             <intent-filter>
-                <action android:name="org.agoo.android.intent.action.RECEIVE" />
+                <action android:name="org.agoo.android.intent.action.RECEIVE"/>
             </intent-filter>
         </receiver>
         <receiver
             android:name="com.umeng.message.ElectionReceiver"
             android:process=":push">
             <intent-filter>
-                <action android:name="org.agoo.android.intent.action.ELECTION_RESULT_V4" />
-                <category android:name="umeng" />
+                <action android:name="org.agoo.android.intent.action.ELECTION_RESULT_V4"/>
+                <category android:name="umeng"/>
             </intent-filter>
         </receiver>
         <receiver
             android:name="com.umeng.message.RegistrationReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.ttxr.activity.intent.action.COMMAND" />
+                <action android:name="com.ttxr.activity.intent.action.COMMAND"/>
             </intent-filter>
         </receiver>
         <receiver android:name="com.umeng.message.BootBroadcastReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
 
@@ -124,28 +159,28 @@
             android:process=":push">
 
             <intent-filter>
-                <action android:name="com.ttxr.activity.intent.action.START" />
+                <action android:name="com.ttxr.activity.intent.action.START"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.ttxr.activity.intent.action.COCKROACH" />
+                <action android:name="com.ttxr.activity.intent.action.COCKROACH"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="org.agoo.android.intent.action.PING_V4" />
-                <category android:name="umeng" />
+                <action android:name="org.agoo.android.intent.action.PING_V4"/>
+                <category android:name="umeng"/>
             </intent-filter>
         </service>
         <service
             android:name="com.umeng.message.UmengIntentService"
-            android:process=":push" />
+            android:process=":push"/>
         <service
             android:name="com.umeng.message.UmengMessageIntentReceiverService"
             android:exported="true"
             android:process=":push">
             <intent-filter>
-                <action android:name="org.android.agoo.client.MessageReceiverService" />
+                <action android:name="org.android.agoo.client.MessageReceiverService"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="org.android.agoo.client.ElectionReceiverService" />
+                <action android:name="org.android.agoo.client.ElectionReceiverService"/>
             </intent-filter>
         </service>
 
@@ -162,7 +197,7 @@
         <!-- umeng 推送 -->
 
         <!-- umeng 反馈 -->
-        <activity android:name="com.umeng.fb.ConversationActivity" />
+        <activity android:name="com.umeng.fb.ConversationActivity"/>
 
         <!-- umeng 更新-->
         <service

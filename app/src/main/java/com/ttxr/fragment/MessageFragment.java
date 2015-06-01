@@ -1,23 +1,32 @@
 package com.ttxr.fragment;
 
-import android.os.Handler;
+import android.app.Activity;
 
+import com.ttxr.activity.MainActivity_;
 import com.ttxr.activity.R;
 import com.ttxr.activity.base.BaseAdapter;
+import com.ttxr.activity.base.BaseApi;
 import com.ttxr.activity.base.BaseListFragment;
 import com.ttxr.adapter.MessageAdapter;
-import com.ttxr.bean.OrderHistoryBean;
+import com.ttxr.api.MessageApi;
+import com.ttxr.bean.UserMsg;
 
 import org.androidannotations.annotations.EFragment;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.androidannotations.annotations.ItemClick;
 
 /**
  * Created by mr.shen on 2015/4/25.
  */
 @EFragment(R.layout.fragment_list)
-public class MessageFragment extends BaseListFragment {
+public class MessageFragment extends BaseListFragment<UserMsg> {
+
+    MainActivity_ activity_;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.activity_ = (MainActivity_) activity;
+    }
 
     @Override
     public int getFragmentTitle() {
@@ -30,26 +39,13 @@ public class MessageFragment extends BaseListFragment {
     }
 
     @Override
-    public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                List<OrderHistoryBean> list = new ArrayList<>();
-//                for (int i = 0; i < 10; i++) {
-//                    list.add(new OrderHistoryBean());
-//                }
-                adapter.setList(list);
-
-                refreshLayout.setRefreshing(false);
-                listview.setPage(++page);
-            }
-        }, 1000);
-
+    public BaseApi getApi() {
+        return new MessageApi(getActivity());
     }
 
     @Override
-    public void onLoadMore() {
-
+    public String getJSONObjectListKey() {
+        return "msgList";
     }
 
     @Override
@@ -60,5 +56,20 @@ public class MessageFragment extends BaseListFragment {
     @Override
     public BaseAdapter getAdapter() {
         return new MessageAdapter(getActivity());
+    }
+
+    @ItemClick
+    public void listview(int position) {
+        UserMsg msg = adapter.getItem(position);
+        if (msg != null) {
+            if (activity_ != null) {
+                activity_.startMapFragment(msg);
+            }
+        }
+    }
+
+    @Override
+    public Class<UserMsg> getClazz() {
+        return UserMsg.class;
     }
 }
