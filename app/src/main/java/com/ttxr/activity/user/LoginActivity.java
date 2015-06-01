@@ -70,7 +70,7 @@ public class LoginActivity extends BaseBackActivity {
         request.setLatitude(ac.cs.getLat());
         request.setLongitude(ac.cs.getLng());
 
-        ac.httpClient.post(this, Url.LOGIN, Util.getDefaultRequestParams(request), new MyJsonHttpResponseHandler(this, getString(R.string.logining)) {
+        ac.httpClient.post(this, Url.getInstance().getURL(Url.LOGIN), Util.getDefaultRequestParams(request), new MyJsonHttpResponseHandler(this, getString(R.string.logining)) {
 
             @Override
             public void onSuccessRetCode(JSONObject jo) throws Throwable {

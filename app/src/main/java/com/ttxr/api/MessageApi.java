@@ -23,7 +23,7 @@ public class MessageApi extends BaseApi implements Serializable {
 
     @Override
     public String getUrl() {
-        return Url.MESSAGE_LIST;
+        return Url.getInstance().getURL(Url.MESSAGE_LIST);
     }
 
 }

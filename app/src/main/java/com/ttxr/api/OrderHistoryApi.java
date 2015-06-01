@@ -22,7 +22,7 @@ public class OrderHistoryApi extends BaseApi {
 
     @Override
     public String getUrl() {
-        return Url.GET_MY_ORDER_LIST;
+        return Url.getInstance().getURL(Url.GET_MY_ORDER_LIST);
     }
 
 }

@@ -180,9 +180,9 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, AMap.On
             MyOrderRequestDTO request1 = new MyOrderRequestDTO();
             request1.setOrderId(msg.getOrderId());
             request1.setStatus(msg.getOrderStatus());
-            post(Url.GET_MY_ORDER, Util.getTokenRequestParams(getActivity(), request1));
+            post(Url.getInstance().getURL(Url.GET_MY_ORDER), Util.getTokenRequestParams(getActivity(), request1));
         } else {
-            post(Url.GET_ORDER_REQUEST, Util.getTokenRequestParams(getActivity(), null));
+            post(Url.getInstance().getURL(Url.GET_ORDER_REQUEST), Util.getTokenRequestParams(getActivity(), null));
         }
     }
 
@@ -767,7 +767,7 @@ public class MapFragment extends BaseFragment implements IFragmentTitle, AMap.On
             MyOrderRequestDTO request1 = new MyOrderRequestDTO();
             request1.setOrderId(bean.getOrderId());
             request1.setStatus(String.valueOf(bean.getStatus() + 1));
-            ac.httpClient.post(Url.CHANGE_ORDER_STATUS, Util.getTokenRequestParams(getActivity(), request1), new MyJsonHttpResponseHandler(getActivity(), getString(R.string.please_wait)) {
+            ac.httpClient.post(Url.getInstance().getURL(Url.CHANGE_ORDER_STATUS), Util.getTokenRequestParams(getActivity(), request1), new MyJsonHttpResponseHandler(getActivity(), getString(R.string.please_wait)) {
                 @Override
                 public void onSuccessRetCode(JSONObject jo) throws Throwable {
                     getOrderSuccessCallBack(jo);

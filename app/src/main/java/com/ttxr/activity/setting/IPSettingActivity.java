@@ -64,7 +64,7 @@ public class IPSettingActivity extends BaseBackActivity {
             url.append(appName.getText().toString() + "/");
         }
         ac.cs.setUrl(url.toString());
-        Url.HOST = url.toString();
+        Url.getInstance(url.toString());
 
         finish();
     }

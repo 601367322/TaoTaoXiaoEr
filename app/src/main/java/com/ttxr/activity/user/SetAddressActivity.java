@@ -46,7 +46,7 @@ public class SetAddressActivity extends BaseBackActivity {
 
         UpdateUserRequestDTO request = new UpdateUserRequestDTO();
         request.setUserAddress(nickname_str);
-        ac.httpClient.post(Url.UPDATE_USERINFO, Util.getTokenRequestParams(this,request), new MyJsonHttpResponseHandler(this,getString(R.string.saving)) {
+        ac.httpClient.post(Url.getInstance().getURL(Url.UPDATE_USERINFO), Util.getTokenRequestParams(this,request), new MyJsonHttpResponseHandler(this,getString(R.string.saving)) {
             @Override
             public void onSuccessRetCode(JSONObject jo) throws Throwable {
                 bean.bean.userAddress = nickname_str;

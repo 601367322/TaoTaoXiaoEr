@@ -61,7 +61,7 @@ public class CommonShared {
     }
 
     public String getUrl() {
-        return sp.getString(URL, Url.HOST);
+        return sp.getString(URL, Url.getInstance().HOST);
     }
 
     public void setUrl(String str) {

@@ -20,6 +20,6 @@ public class OrderStatusApi extends BaseApi {
 
     @Override
     public String getUrl() {
-        return Url.GET_ORDER_STATUS;
+        return Url.getInstance().getURL(Url.GET_ORDER_STATUS);
     }
 }

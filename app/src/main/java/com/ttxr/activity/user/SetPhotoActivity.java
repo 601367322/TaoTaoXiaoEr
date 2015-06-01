@@ -167,6 +167,6 @@ public class SetPhotoActivity extends BaseActivity {
                 finish();
             }
         };
-        ac.httpClient.post(Url.UPDATE_LOGO, params, hanlder);
+        ac.httpClient.post(Url.getInstance().getURL(Url.UPDATE_LOGO), params, hanlder);
     }
 }
