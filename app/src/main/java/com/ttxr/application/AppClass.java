@@ -41,7 +41,7 @@ public class AppClass extends Application {
 
         cs = new CommonShared(this);
 
-        Url.HOST = cs.getUrl();
+        Url.getInstance(cs.getUrl());
     }
 
     ;

@@ -90,7 +90,7 @@ public class SettingFragment extends BaseFragment implements IFragmentTitle {
 
     @Click
     public void exit(){
-        ac.httpClient.post(Url.EXIT, null, new MyJsonHttpResponseHandler(getActivity()) {
+        ac.httpClient.post(Url.getInstance().getURL(Url.EXIT), null, new MyJsonHttpResponseHandler(getActivity()) {
             @Override
             public void onSuccessRetCode(JSONObject jo) throws Throwable {
 

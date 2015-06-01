@@ -54,7 +54,7 @@ public class SetPassWordActivity extends BaseBackActivity {
             request.setUserLongitude(ac.cs.getLng());
         }
 
-        ac.httpClient.post(this, Url.REG, Util.getDefaultRequestParams(request), new MyJsonHttpResponseHandler(context, getString(R.string.reging)) {
+        ac.httpClient.post(this, Url.getInstance().getURL(Url.REG), Util.getDefaultRequestParams(request), new MyJsonHttpResponseHandler(context, getString(R.string.reging)) {
 
             @Override
             public void onSuccessRetCode(JSONObject jo) throws Throwable {
